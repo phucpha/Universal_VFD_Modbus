@@ -53,7 +53,7 @@
 		</DataType>
 	</DataTypes>
 	<Project GUID="{A539E10C-E5F8-4694-A8D1-A1C3526A7D71}" Name="VFD" PrjFilePath="..\..\VFD\VFD.plcproj" TmcFilePath="..\..\VFD\VFD.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="VFD\VFD.tmc" TmcHash="{386F116B-0D5A-0537-9621-99FD4456E24F}">
+		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="VFD\VFD.tmc" TmcHash="{3A3225ED-AACF-2EBB-83C1-2E0757911D1F}">
 			<Name>VFD Instance</Name>
 			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 			<Vars VarGrpType="1">

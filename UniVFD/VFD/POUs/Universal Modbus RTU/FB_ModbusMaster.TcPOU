@@ -50,9 +50,7 @@ VAR
 	nReadType: WORD;
 	iReadType : POINTER TO WORD;
 END_VAR
-VAR CONSTANT
-	offVFd	: WORD := 5;
-END_VAR
+
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[StateMachine();
@@ -402,13 +400,6 @@ END_VAR
 		END_IF
 		iStepRunning := E_ModbusMasterStateRun.Trigger;
 
-	E_ModbusMasterStateRun.Check_If_end_of_transmission_series: // Check if end of transmission series of slave
-		IF iLoopSlave > iAmountSlave THEN
-			iStepRunning := E_ModbusMasterStateRun.Return_done;
-		ELSE
-			iStepRunning := E_ModbusMasterStateRun.Trigger;
-		END_IF
-
 	E_ModbusMasterStateRun.Return_done: // Return, done
 		iStepRunning := E_ModbusMasterStateRun.SetParametersWrite;
 		iLoopAdr := 0;
@@ -665,7 +656,8 @@ END_VAR
       <LineId Id="219" Count="0" />
       <LineId Id="214" Count="0" />
       <LineId Id="53" Count="3" />
-      <LineId Id="60" Count="9" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="68" Count="1" />
       <LineId Id="71" Count="0" />
       <LineId Id="120" Count="0" />
       <LineId Id="119" Count="0" />
