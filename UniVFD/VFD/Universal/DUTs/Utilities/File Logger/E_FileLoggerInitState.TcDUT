@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="E_FileLoggerInitState" Id="{431c0418-8a21-4825-bcda-26e53f4628b1}">
+    <Declaration><![CDATA[{attribute 'strict'}
+TYPE E_FileLoggerInitState :
+(
+	FILE_LOGGER_INIT_CREATE_DIR 	:= 0,	(* Creating directory if doesn't exist *)
+	FILE_LOGGER_INIT_GET_TIME		:= 10,	(* Getting current time *)
+	FILE_LOGGER_INIT_CREATE_FILE	:= 20,	(* Creating empty file of logger *)
+	FILE_LOGGER_INIT_ADD_HEADER		:= 30,	(* Adding header at the beggining of file *)
+	FILE_LOGGER_INIT_CLOSE_FILE		:= 40,	(* Closing file *)
+	FILE_LOGGER_INIT_DONE 			:= 50	(* Initiazlization done *)
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

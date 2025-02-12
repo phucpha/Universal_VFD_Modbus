@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_ModbusSlave" Id="{f6cc8562-becd-4eee-9889-c7c39fc121d0}">
+    <Declaration><![CDATA[INTERFACE I_ModbusSlave
+]]></Declaration>
+    <Property Name="Address" Id="{dee7b5b1-c4b0-40ec-878a-82d2b76b0dd8}">
+      <Declaration><![CDATA[PROPERTY Address : POINTER TO WORD]]></Declaration>
+      <Get Name="Get" Id="{5fb96f44-6dc5-461f-869c-bc965aa1fa5c}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="AddressWrite" Id="{04297965-8109-4286-a684-adaceb9424b8}">
+      <Declaration><![CDATA[PROPERTY AddressWrite : Pointer to Word]]></Declaration>
+      <Get Name="Get" Id="{9117b511-3a63-446c-8776-7a1689062b93}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Convert" Id="{67b19cf7-dc69-4018-a62c-5d949742214d}">
+      <Declaration><![CDATA[METHOD Convert : BOOL
+VAR_INPUT
+	iRegionNo	:	INT;
+	pReadData	:	POINTER TO word;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="FirstCycle" Id="{ff76b66c-4ab6-4ead-a27c-e8efcf76d1cd}">
+      <Declaration><![CDATA[METHOD FirstCycle 
+VAR_INPUT
+	sName : STRING;
+	iUnitID : BYTE ; // modbus address of the device : 1- 255
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="ModbusErrorID" Id="{104d4279-78f3-4a2b-abfb-5f74257f2b8a}">
+      <Declaration><![CDATA[PROPERTY ModbusErrorID : MODBUS_ERRORS]]></Declaration>
+      <Get Name="Get" Id="{c488a572-8a84-4064-b5dc-1c1f779e9737}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{44a6c67d-c825-46fe-ae17-ba209b391519}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="Name" Id="{2c69d065-23dd-4e8f-9673-4e7681d51ae9}">
+      <Declaration><![CDATA[PROPERTY Name : STRING]]></Declaration>
+      <Get Name="Get" Id="{30236371-0955-4842-8eb2-a434519c7636}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{6b9c6905-1e13-4074-96ec-750265b20c6d}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="NumAddRegion" Id="{d937ec07-11bc-425a-8979-6effea6529dd}">
+      <Declaration><![CDATA[PROPERTY NumAddRegion : UINT]]></Declaration>
+      <Get Name="Get" Id="{52c4942d-5459-4a68-bb15-769a28af736f}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="NumAddRegionWrite" Id="{b989a895-efda-47a4-acc3-a5f25d8e554f}">
+      <Declaration><![CDATA[PROPERTY NumAddRegionWrite : Uint]]></Declaration>
+      <Get Name="Get" Id="{ab147357-66bc-4265-bae8-83e72ebb3c3d}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="UnitID" Id="{89649e14-2df6-4b0a-ad7a-6a9fb6459a86}">
+      <Declaration><![CDATA[PROPERTY UnitID : BYTE]]></Declaration>
+      <Get Name="Get" Id="{f10a8742-e459-457a-a058-8f070ad2d44a}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{99d0e4b3-2b31-4f9b-8cd4-f598a59acd3c}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

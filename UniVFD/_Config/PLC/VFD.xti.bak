@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+<TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.56" ClassName="CNestedPlcProjDef">
+	<DataTypes>
+		<DataType>
+			<Name GUID="{85E5F182-994B-D58F-D73E-E06C3608A833}" Namespace="Tc2_ModbusRTU" AutoDeleteType="true">MB_PcComInData</Name>
+			<BitSize>528</BitSize>
+			<SubItem>
+				<Name>SerStatus</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000004}">WORD</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>D</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000001}">BYTE</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>64</Elements>
+				</ArrayInfo>
+				<BitSize>512</BitSize>
+				<BitOffs>16</BitOffs>
+			</SubItem>
+			<Properties>
+				<Property>
+					<Name>hide</Name>
+				</Property>
+			</Properties>
+		</DataType>
+		<DataType>
+			<Name GUID="{817F87BD-54FA-7383-92CB-61C84BBDADE4}" Namespace="Tc2_ModbusRTU" AutoDeleteType="true">MB_PcComOutData</Name>
+			<BitSize>528</BitSize>
+			<SubItem>
+				<Name>SerCtrl</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000004}">WORD</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>D</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000001}">BYTE</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>64</Elements>
+				</ArrayInfo>
+				<BitSize>512</BitSize>
+				<BitOffs>16</BitOffs>
+			</SubItem>
+			<Properties>
+				<Property>
+					<Name>hide</Name>
+				</Property>
+			</Properties>
+		</DataType>
+	</DataTypes>
+	<Project GUID="{A539E10C-E5F8-4694-A8D1-A1C3526A7D71}" Name="VFD" PrjFilePath="..\..\VFD\VFD.plcproj" TmcFilePath="..\..\VFD\VFD.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="VFD\VFD.tmc" TmcHash="{386F116B-0D5A-0537-9621-99FD4456E24F}">
+			<Name>VFD Instance</Name>
+			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+			<Vars VarGrpType="1">
+				<Name>Machine Inputs</Name>
+				<Var>
+					<Name>Prg_Machine.fbModbusMaster.fbModbusMaster.InData</Name>
+					<Type GUID="{85E5F182-994B-D58F-D73E-E06C3608A833}" Namespace="Tc2_ModbusRTU">MB_PcComInData</Type>
+				</Var>
+			</Vars>
+			<Vars VarGrpType="2" AreaNo="1">
+				<Name>Machine Outputs</Name>
+				<Var>
+					<Name>Prg_Machine.fbModbusMaster.fbModbusMaster.OutData</Name>
+					<Type GUID="{817F87BD-54FA-7383-92CB-61C84BBDADE4}" Namespace="Tc2_ModbusRTU">MB_PcComOutData</Type>
+				</Var>
+			</Vars>
+			<Contexts>
+				<Context>
+					<Id>0</Id>
+					<Name>Machine</Name>
+					<ManualConfig>
+						<OTCID>#x02010030</OTCID>
+					</ManualConfig>
+					<Priority>20</Priority>
+					<CycleTime>10000000</CycleTime>
+				</Context>
+			</Contexts>
+			<TaskPouOids>
+				<TaskPouOid Prio="20" OTCID="#x08502001"/>
+			</TaskPouOids>
+		</Instance>
+	</Project>
+	<Mappings>
+		<OwnerA Name="VFD Instance">
+			<OwnerB Name="TIID^Device 4 (COM Port)">
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data1" Size="8" OffsA="16"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data10" Size="8" OffsA="88"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data11" Size="8" OffsA="96"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data12" Size="8" OffsA="104"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data13" Size="8" OffsA="112"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data14" Size="8" OffsA="120"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data15" Size="8" OffsA="128"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data16" Size="8" OffsA="136"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data17" Size="8" OffsA="144"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data18" Size="8" OffsA="152"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data19" Size="8" OffsA="160"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data2" Size="8" OffsA="24"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data20" Size="8" OffsA="168"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data21" Size="8" OffsA="176"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data22" Size="8" OffsA="184"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data23" Size="8" OffsA="192"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data24" Size="8" OffsA="200"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data25" Size="8" OffsA="208"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data26" Size="8" OffsA="216"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data27" Size="8" OffsA="224"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data28" Size="8" OffsA="232"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data29" Size="8" OffsA="240"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data3" Size="8" OffsA="32"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data30" Size="8" OffsA="248"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data31" Size="8" OffsA="256"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data32" Size="8" OffsA="264"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data33" Size="8" OffsA="272"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data34" Size="8" OffsA="280"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data35" Size="8" OffsA="288"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data36" Size="8" OffsA="296"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data37" Size="8" OffsA="304"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data38" Size="8" OffsA="312"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data39" Size="8" OffsA="320"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data4" Size="8" OffsA="40"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data40" Size="8" OffsA="328"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data41" Size="8" OffsA="336"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data42" Size="8" OffsA="344"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data43" Size="8" OffsA="352"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data44" Size="8" OffsA="360"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data45" Size="8" OffsA="368"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data46" Size="8" OffsA="376"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data47" Size="8" OffsA="384"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data48" Size="8" OffsA="392"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data49" Size="8" OffsA="400"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data5" Size="8" OffsA="48"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data50" Size="8" OffsA="408"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data51" Size="8" OffsA="416"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data52" Size="8" OffsA="424"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data53" Size="8" OffsA="432"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data54" Size="8" OffsA="440"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data55" Size="8" OffsA="448"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data56" Size="8" OffsA="456"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data57" Size="8" OffsA="464"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data58" Size="8" OffsA="472"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data59" Size="8" OffsA="480"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data6" Size="8" OffsA="56"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data60" Size="8" OffsA="488"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data61" Size="8" OffsA="496"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data62" Size="8" OffsA="504"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data63" Size="8" OffsA="512"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data64" Size="8" OffsA="520"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data7" Size="8" OffsA="64"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data8" Size="8" OffsA="72"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Data9" Size="8" OffsA="80"/>
+				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData" VarB="Inputs^Status" Size="16"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Ctrl" Size="16"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data1" Size="8" OffsA="16"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data10" Size="8" OffsA="88"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data11" Size="8" OffsA="96"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data12" Size="8" OffsA="104"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data13" Size="8" OffsA="112"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data14" Size="8" OffsA="120"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data15" Size="8" OffsA="128"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data16" Size="8" OffsA="136"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data17" Size="8" OffsA="144"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data18" Size="8" OffsA="152"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data19" Size="8" OffsA="160"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data2" Size="8" OffsA="24"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data20" Size="8" OffsA="168"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data21" Size="8" OffsA="176"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data22" Size="8" OffsA="184"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data23" Size="8" OffsA="192"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data24" Size="8" OffsA="200"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data25" Size="8" OffsA="208"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data26" Size="8" OffsA="216"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data27" Size="8" OffsA="224"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data28" Size="8" OffsA="232"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data29" Size="8" OffsA="240"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data3" Size="8" OffsA="32"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data30" Size="8" OffsA="248"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data31" Size="8" OffsA="256"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data32" Size="8" OffsA="264"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data33" Size="8" OffsA="272"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data34" Size="8" OffsA="280"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data35" Size="8" OffsA="288"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data36" Size="8" OffsA="296"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data37" Size="8" OffsA="304"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data38" Size="8" OffsA="312"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data39" Size="8" OffsA="320"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data4" Size="8" OffsA="40"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data40" Size="8" OffsA="328"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data41" Size="8" OffsA="336"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data42" Size="8" OffsA="344"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data43" Size="8" OffsA="352"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data44" Size="8" OffsA="360"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data45" Size="8" OffsA="368"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data46" Size="8" OffsA="376"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data47" Size="8" OffsA="384"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data48" Size="8" OffsA="392"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data49" Size="8" OffsA="400"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data5" Size="8" OffsA="48"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data50" Size="8" OffsA="408"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data51" Size="8" OffsA="416"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data52" Size="8" OffsA="424"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data53" Size="8" OffsA="432"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data54" Size="8" OffsA="440"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data55" Size="8" OffsA="448"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data56" Size="8" OffsA="456"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data57" Size="8" OffsA="464"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data58" Size="8" OffsA="472"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data59" Size="8" OffsA="480"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data6" Size="8" OffsA="56"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data60" Size="8" OffsA="488"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data61" Size="8" OffsA="496"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data62" Size="8" OffsA="504"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data63" Size="8" OffsA="512"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data64" Size="8" OffsA="520"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data7" Size="8" OffsA="64"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data8" Size="8" OffsA="72"/>
+				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData" VarB="Outputs^Data9" Size="8" OffsA="80"/>
+			</OwnerB>
+		</OwnerA>
+	</Mappings>
+</TcSmItem>

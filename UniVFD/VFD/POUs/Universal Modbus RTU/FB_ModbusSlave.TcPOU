@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_ModbusSlave" Id="{3c28a97a-7b9e-4799-881a-cc6e3fde9dc8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ModbusSlave IMPLEMENTS I_ModbusSlave
+VAR
+	iUnitID			: 		BYTE;
+	arrAddress		:		ARRAY [0..50] OF ARRAY [0..2] OF WORD;
+	iNumAddRegion	:		UINT;
+	
+	arrAddressWrite		: ARRAY [0..20] OF ARRAY [0..9] OF WORD;// write Multiple or single register
+	(*// the 20 is max number of region write,
+		array[0..9] :  +[0] :  the address of this region.
+						+[1] : number of register will be write
+						+ [2..9] : max 8 value for write
+	*)
+	iNumAddRegionWrite	: UINT;
+	
+	bSwap			:		BOOL;
+	
+	sName			:		STRING;
+	bFirstCycle 	: 		BOOL := TRUE;
+	iModbusErrorID	:		MODBUS_ERRORS;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Address" Id="{6bad1251-2173-4dad-ba55-b0ca54c51b4b}">
+      <Declaration><![CDATA[PROPERTY Address : POINTER TO WORD]]></Declaration>
+      <Get Name="Get" Id="{985bce2e-167a-45be-8089-4bec8ed22891}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Address := ADR(arrAddress);]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="AddressWrite" Id="{5c4258fd-a88b-4ea9-9dad-ce3ab400d74c}">
+      <Declaration><![CDATA[PROPERTY AddressWrite : POINTER TO WORD]]></Declaration>
+      <Get Name="Get" Id="{a0e8c4bf-b72b-4849-87ca-51e8c4ef32ff}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[AddressWrite := ADR( arrAddressWrite);]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Convert" Id="{3fd4f7ca-261b-4d44-a547-551bb3314b31}">
+      <Declaration><![CDATA[METHOD Convert : BOOL
+VAR_INPUT
+	iRegionNo	:	INT;
+	pReadData	:	POINTER TO word;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FirstCycle" Id="{5bee89eb-ef51-45da-b0f8-e42cc2ee867a}">
+      <Declaration><![CDATA[METHOD FirstCycle // must be call once time 
+VAR_INPUT
+	sName : STRING;
+	iUnitID : BYTE ; // modbus address of the device : 1- 255
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.sName := sName;
+THIS^.iUnitID := iUnitID;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ModbusErrorID" Id="{10a0f1de-4a02-4f0a-b4da-6536bf3ef75c}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'variable'}
+PROPERTY ModbusErrorID : MODBUS_ERRORS]]></Declaration>
+      <Get Name="Get" Id="{feb78e1e-5a56-48eb-bc4b-7b331dd98e5f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ModbusErrorID := iModbusErrorID;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{41376bb8-baa5-43b9-b4af-8506bc2623c3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[iModbusErrorID := ModbusErrorID;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Name" Id="{06664f22-c56c-4b15-a1d7-a34951a97f8f}">
+      <Declaration><![CDATA[PROPERTY Name : STRING]]></Declaration>
+      <Get Name="Get" Id="{9022ba2a-8142-4b11-aa2b-314496623ffe}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Name := sName;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{6f38bf1f-ebc9-4220-aa3d-695fb0fa3d27}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[sName := Name;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="NumAddRegion" Id="{b5abfa30-10e8-4954-8477-81f742d0936e}">
+      <Declaration><![CDATA[PROPERTY NumAddRegion : UINT]]></Declaration>
+      <Get Name="Get" Id="{f25e2842-516b-4ae1-85e4-95db72ca8802}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[NumAddRegion := iNumAddRegion;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="NumAddRegionWrite" Id="{969a2335-93c3-4c90-91d6-c32d995f4ac2}">
+      <Declaration><![CDATA[PROPERTY NumAddRegionWrite : UINT]]></Declaration>
+      <Get Name="Get" Id="{b1adea90-2fa2-4e92-a2fc-89d69ec231dc}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[NumAddRegionWrite := iNumAddRegionWrite;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="UnitID" Id="{09876766-f5af-4b25-9fd2-4a972765efd0}">
+      <Declaration><![CDATA[PROPERTY UnitID : BYTE]]></Declaration>
+      <Get Name="Get" Id="{cd055b1c-cf68-47e9-b9fd-fac9e0785529}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[UnitID := iUnitID;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{0fe61a22-da1d-49e5-a05a-46b09e346e4b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[iUnitID := UnitID;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="FB_ModbusSlave">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusSlave.Address.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusSlave.AddressWrite.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusSlave.Convert">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusSlave.FirstCycle">
+      <LineId Id="2" Count="0" />
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusSlave.ModbusErrorID.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusSlave.ModbusErrorID.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusSlave.Name.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusSlave.Name.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusSlave.NumAddRegion.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusSlave.NumAddRegionWrite.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusSlave.UnitID.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusSlave.UnitID.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

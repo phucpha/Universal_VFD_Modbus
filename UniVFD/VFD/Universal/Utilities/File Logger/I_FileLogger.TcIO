@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_FileLogger" Id="{043aff8c-eb4e-4d92-b436-3f2e50c550b8}">
+    <Declaration><![CDATA[INTERFACE I_FileLogger
+]]></Declaration>
+    <Property Name="Active" Id="{a04d4ffc-e47f-4e0b-b6af-29f0839695e9}">
+      <Declaration><![CDATA[PROPERTY Active : REFERENCE TO BOOL]]></Declaration>
+      <Get Name="Get" Id="{26057a50-cb4f-443c-a192-bb50a0cb2228}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Busy" Id="{2f0a79a0-bc65-49ce-ae8b-d8916a30c452}">
+      <Declaration><![CDATA[PROPERTY Busy : REFERENCE TO BOOL]]></Declaration>
+      <Get Name="Get" Id="{709e6935-dcd0-406f-98b1-28e48a640c7f}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Error" Id="{1c7af16d-e0d9-409c-ae6e-de090ec21a63}">
+      <Declaration><![CDATA[PROPERTY Error : REFERENCE TO BOOL]]></Declaration>
+      <Get Name="Get" Id="{c23b9b67-8a1d-46d8-8581-3d7f3d77e5d2}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="ErrorID" Id="{eafa7d07-e931-4f16-9f39-f4b82b54e312}">
+      <Declaration><![CDATA[PROPERTY ErrorID : REFERENCE TO UDINT]]></Declaration>
+      <Get Name="Get" Id="{9aff19bc-5274-40cc-8622-048bc50d0150}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="MR_Abort" Id="{15749cdb-c367-4bfd-a9fa-90729f149312}">
+      <Declaration><![CDATA[METHOD MR_Abort : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="MR_AddLogs" Id="{329c6e70-c00d-463a-bb6e-d1a0a2a60f31}">
+      <Declaration><![CDATA[METHOD MR_AddLogs : BOOL
+VAR_INPUT
+	sLogMessage : STRING;
+END_VAR
+
+]]></Declaration>
+    </Method>
+    <Method Name="MR_FirstCycle" Id="{e41d68a5-bfa4-4bbc-a485-3d5f048d7697}">
+      <Declaration><![CDATA[METHOD MR_FirstCycle : BOOL
+VAR_INPUT
+	sName 		: STRING;
+	sFileDir	: STRING(255);
+	sFileName	: STRING(255);
+	sAmsNetId	: T_AmsNetID;
+	bAddTimeStamp	: BOOL;
+	bAddHeader		: BOOL;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="MR_Init" Id="{705919bc-9cb1-4c47-b6ea-d0e3eefddbc2}">
+      <Declaration><![CDATA[METHOD MR_Init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="MR_Reset" Id="{fb1e9b77-4d38-4770-abc5-82ca47dafd9a}">
+      <Declaration><![CDATA[METHOD MR_Reset : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

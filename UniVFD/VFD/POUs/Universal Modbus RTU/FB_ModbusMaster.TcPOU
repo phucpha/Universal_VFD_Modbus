@@ -1,0 +1,762 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_ModbusMaster" Id="{383531aa-3652-4615-9883-854b84ebdc31}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ModbusMaster //IMPLEMENTS I_UniversalUnit
+VAR
+	sName			:		STRING;
+	bInitialized	:		BOOL;
+	iScantime		:		UINT;
+	iTimeout		:		UINT := 1000;//1000ms
+	iErrorID		:		MODBUS_ERRORS;
+	
+	bBusy			: 		BOOL;
+	bError			:		BOOL;
+	
+	iStepInit		:		INT;
+	iStepGeneral	: 		E_ModBusMasterState;
+	iStepRunning	:		E_ModbusMasterStateRun;
+	bFirstCycle		:		BOOL;
+	
+	bRun			:		BOOL;
+	bStop			: 		BOOL;
+
+	fbModbusMaster	: 		ModbusRtuMaster_PcCOM;
+	//fbModbusMaster : 		ModbusRtuMasterV2_KL6x22B;
+	ipModbusSlave	:		ARRAY [1..247] OF I_ModbusSlave;
+	iAmountSlave	: 		UINT;
+	
+	iLoopSlave		:		UINT	:= 1;
+	iLoopAdr		:		UINT;
+	iQuantity 		: 		POINTER TO WORD;
+	iMBAddr 		: 		POINTER TO WORD;
+    arrData			: 		ARRAY [0..255] OF WORD;
+	
+	bDelayState		:		BOOL;
+	
+	
+	UnitId	: BYTE;
+	Quantity	: WORD;
+	MBAddr	: WORD;
+	cbLength : UINT;
+	pMemoryAddr	: POINTER TO BYTE;
+	pDataWrite	: POINTER TO WORD;
+	
+	
+	
+	bexecute	: BOOL;
+	
+	tCalculateTimeRW	: TON;
+	tonDelayBetweenCyclesReadWrite	: TON;
+	tDelayBetweenCycles	: TIME := T#50MS;
+	tDelayModbusNoRespon	: TON ;
+	nNumberFaultRW	: UINT;
+	nReadType: WORD;
+	iReadType : POINTER TO WORD;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[StateMachine();
+
+bRun :=  iStepGeneral = E_ModBusMasterState.Running ;
+bStop := iStepGeneral = E_ModBusMasterState.stop_done;
+
+bInitialized := iStepGeneral >= E_ModBusMasterState.Ready;
+
+iErrorID := fbModbusMaster.ErrorId;
+
+tCalculateTimeRW(PT	:= T#10S); // for test how much time read write total
+
+
+]]></ST>
+    </Implementation>
+    <Folder Name="Methods" Id="{5a095819-3055-4b7a-8533-dd43c16566ee}" />
+    <Folder Name="Property" Id="{f1141b31-88f8-410e-ba5f-c7e610ee65c4}" />
+    <Folder Name="StateMachine" Id="{69bb66cf-bbd2-4fd4-b61a-6e441aa00c5d}" />
+    <Method Name="Abort" Id="{d170ce10-c663-4dfe-9dba-a085107ba388}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Abort : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bError := FALSE;
+iErrorID := 0;
+bError := FALSE;
+iStepInit		:= 0;
+iStepGeneral	:= E_ModBusMasterState.Uninitialized;
+iStepRunning	:= E_ModbusMasterStateRun.Trigger;
+
+iLoopSlave		:= 1;
+iLoopAdr		:= 0;
+
+fbModbusMaster.Execute := FALSE;
+
+Abort := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="AnyError" Id="{45cb1e5b-801a-4c7d-a80e-9506285dfb3c}" FolderPath="Property\">
+      <Declaration><![CDATA[PROPERTY AnyError : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{0e8a937d-e4ac-4b51-8775-0d4d9c3856ca}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[AnyError 	:= bError;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Busy" Id="{b11648ea-ec4e-40e9-adc4-f77827ee7f01}" FolderPath="Property\">
+      <Declaration><![CDATA[PROPERTY Busy : BOOL]]></Declaration>
+      <Get Name="Get" Id="{519d5585-5778-40a4-8f32-fd4c4cfacb5a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Busy := bBusy;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ErrorID" Id="{81dab0ad-62e0-4fd2-94f4-3786bdfc5c61}" FolderPath="Property\">
+      <Declaration><![CDATA[PROPERTY ErrorID : MODBUS_ERRORS]]></Declaration>
+      <Get Name="Get" Id="{83bcf002-a8c3-4e49-a3f7-28f1ce353a2e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ErrorID := iErrorID;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Init" Id="{adb0f840-9854-48bb-9867-8558f3fc8764}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Init : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iStepGeneral = E_ModBusMasterState.Uninitialized THEN
+	iStepGeneral := E_ModBusMasterState.Initializing;
+END_IF
+
+//Method output
+	Init := (iStepGeneral >= E_ModBusMasterState.Ready);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Initialized" Id="{2f2b00e9-f2c5-40fe-be3e-593bf36d21e2}" FolderPath="Property\">
+      <Declaration><![CDATA[PROPERTY Initialized : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{aaec9d99-fbad-4bfd-9d7a-b9dfa8f7de57}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Initialized := bInitialized;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Name" Id="{f8832320-307e-488d-ba14-68e6271ef348}" FolderPath="Property\">
+      <Declaration><![CDATA[PROPERTY Name : STRING
+]]></Declaration>
+      <Get Name="Get" Id="{c7137891-6cf8-4492-9eed-ef3e19127cac}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Name := sName;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{9de09c02-6782-435e-9c96-cedaa8910402}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[sName := Name;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ReadData" Id="{75712a42-a84c-4947-ac2a-2d1b25b7b297}" FolderPath="Property\">
+      <Declaration><![CDATA[PROPERTY ReadData : ARRAY [0..255] OF Word]]></Declaration>
+      <Get Name="Get" Id="{129c8a36-86b9-4a8a-abd5-bee9fde7151e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ReadData := arrData;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ReadDataSize" Id="{3cb8fabd-08bb-4c22-96b3-af7830849c39}" FolderPath="Property\">
+      <Declaration><![CDATA[PROPERTY ReadDataSize : uint]]></Declaration>
+      <Get Name="Get" Id="{3ae32520-56d9-4458-be91-20d66ad48a8f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ReadDataSize := INT_TO_UINT(SIZEOF(arrData));]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="RegisterSlave" Id="{991fe131-bc6d-4e7e-9414-d4034de09ad3}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD RegisterSlave : BOOL
+VAR_INPUT
+	ModbusSlave		:		I_ModbusSlave;
+END_VAR
+VAR
+	iLoop	:	UINT;
+	bExists	:	BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR iLoop := 1 TO iAmountSlave DO
+	IF ipModbusSlave[iLoop] = ModbusSlave THEN
+		bExists := TRUE;
+		iLoop := iAmountSlave;// end loop for command
+	END_IF
+END_FOR 
+IF NOT bExists THEN
+	iAmountSlave := iAmountSlave + 1;
+	ipModbusSlave[iAmountSlave] := ModbusSlave;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reset" Id="{4190b5ad-ee32-41e6-86da-3cf60dfcd435}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Reset : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bError := FALSE;
+iErrorID := 0;
+bError := FALSE;
+iStepInit		:= 0;
+iStepGeneral	:= E_ModBusMasterState.Uninitialized;
+iStepRunning	:= E_ModbusMasterStateRun.Trigger;
+
+iLoopSlave		:= 1;
+iLoopAdr		:= 0;
+
+fbModbusMaster.Execute := FALSE;
+
+Reset := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Run" Id="{07a8bc59-999b-4d59-9560-feef9f903a20}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Run : BOOL /// call from FB_modbus 
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (iStepGeneral = E_ModBusMasterState.Ready) THEN
+	iStepGeneral := E_ModBusMasterState.Running;
+END_IF
+
+bRun := TRUE;
+Run := (iStepGeneral >= E_ModBusMasterState.Running) AND (iStepGeneral < E_ModBusMasterState.stop);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ScanTime" Id="{5b7878c4-4362-4d5b-99fa-9da47a4ca446}" FolderPath="Property\">
+      <Declaration><![CDATA[PROPERTY ScanTime : UINT]]></Declaration>
+      <Get Name="Get" Id="{2fe67a35-e9ed-495b-adb3-26e20558a72d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ScanTime := iScantime;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{4bf9d9f9-e2df-44cf-a742-c42676596d50}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[iScantime := ScanTime;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="StateInit" Id="{4e49a1af-97ef-4ae6-a0c3-b5234cc2497a}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD protected StateInit : BOOL (*Unit is performing initialization*)
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT bError THEN
+	iStepGeneral := E_ModBusMasterState.Ready;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StateMachine" Id="{c5907cd4-9636-4b7b-9f9b-3b47835d586e}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD protected StateMachine : BOOL (*State machine of unit*)
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//State machine						   
+	CASE iStepGeneral OF
+		E_ModBusMasterState.Uninitialized:  //Uninitialized
+			StateUninitialized();
+	
+		E_ModBusMasterState.Initializing: //Initializing
+			StateInit();
+	
+		E_ModBusMasterState.Ready: //Ready
+			StateReady();
+		
+		E_ModBusMasterState.Running: //Running
+			StateRunning();
+						
+		E_ModBusMasterState.stop: //stop
+			StateStopping();
+			
+		E_ModBusMasterState.stop_done: //stop done
+			StateStoppingDone();
+	END_CASE
+	
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StateReady" Id="{652bc040-6918-41f6-8573-0396ad5da8fa}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD protected StateReady : BOOL (* Unit is initialized*)
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StateRunning" Id="{97a85ca0-cdf0-4a98-99b6-286d42d839ec}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD PROTECTED StateRunning : BOOL (* Unit is uninitialized*)
+VAR 
+	
+
+	
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE iStepRunning OF
+	E_ModbusMasterStateRun.Trigger: // Trigger
+			
+			IF iAmountSlave > 0 THEN
+				iStepRunning := E_ModbusMasterStateRun.SetParameters;
+			END_IF
+			
+			
+	E_ModbusMasterStateRun.SetParameters: // Set parameters
+			
+		IF ipModbusSlave[iLoopSlave].NumAddRegion <> 0 AND 
+		   iLoopAdr <= ipModbusSlave[iLoopSlave].NumAddRegion - 1 THEN // iLoopAdr start from 1
+				iQuantity := (ipModbusSlave[iLoopSlave].Address + (iLoopAdr*3+1)*SIZEOF(WORD));// return address( array address of FbSlave) + ... : contain quatity of word(modbus) read
+				iMBAddr := (ipModbusSlave[iLoopSlave].Address + (iLoopAdr*3)*SIZEOF(WORD));// return address word contain value address( modbus) 
+				UnitID 	:=		ipModbusSlave[iLoopSlave].UnitID;
+				Quantity	:=	iQuantity^;
+				MBAddr	:=		iMBAddr^;
+				cbLength	:= 	SIZEOF(arrData);
+				pMemoryAddr	:= 	ADR(arrData);
+				iReadType :=  (ipModbusSlave[iLoopSlave].Address + (iLoopAdr*3 + 2)*SIZEOF(WORD));
+				nReadType := iReadType^;
+				iLoopAdr := iLoopAdr + 1;// the purpose to escape form IF  iLoopAdr <= ipModbusSlave...) why didn't use for loop => the anser is to reset the IloopAddr, while use for the resault can extremely loop 
+				iStepRunning := E_ModbusMasterStateRun.SendRequest;
+		ELSE 
+			iLoopAdr := 0;
+			iStepRunning := E_ModbusMasterStateRun.Return_done;
+		END_IF
+
+			
+	E_ModbusMasterStateRun.SendRequest: // Send request
+		CASE nReadType OF
+			0:
+				fbModbusMaster.ReadRegs( 	UnitID:= UnitID, 
+											Quantity:= Quantity, 
+											MBAddr:= MBAddr, 
+											cbLength:= cbLength, 
+											pMemoryAddr:= pMemoryAddr, 
+											Execute:=  TRUE,
+											Timeout:= 	UINT_TO_TIME(iTimeout),
+											BUSY=> bBusy, 
+											Error=> bError , 
+											ErrorId=>iErrorId 
+											);
+			
+			1:
+				fbModbusMaster.ReadInputRegs( 	UnitID:= UnitID, 
+												Quantity:= Quantity, 
+												MBAddr:= MBAddr, 
+												cbLength:= cbLength, 
+												pMemoryAddr:= pMemoryAddr, 
+												Execute:=  TRUE,
+												Timeout:= 	UINT_TO_TIME(iTimeout),
+												BUSY=> bBusy, 
+												Error=> bError , 
+												ErrorId=>iErrorId 
+												);
+			
+		END_CASE
+		iStepRunning := E_ModbusMasterStateRun.Wait_respond;
+						
+	E_ModbusMasterStateRun.Wait_respond:
+		CASE nReadType OF
+			0:
+				fbModbusMaster.ReadRegs(Execute := FALSE);
+			1:
+				fbModbusMaster.ReadInputRegs(Execute := FALSE);
+		END_CASE
+		
+		IF NOT fbModbusMaster.BUSY AND NOT fbModbusMaster.Error THEN
+			iStepRunning := E_ModbusMasterStateRun.ConvertRawData;
+			nNumberFaultRW := 0;
+		END_IF
+		
+		IF fbModbusMaster.Error THEN
+			IF fbModbusMaster.ErrorId = MODBUSERROR_NO_RESPONSE THEN
+				tDelayModbusNoRespon( IN := TRUE, PT := UINT_TO_TIME(iTimeout + 100));
+				IF tDelayModbusNoRespon.Q THEN
+					tDelayModbusNoRespon( IN := FALSE);
+					iStepRunning := E_ModbusMasterStateRun.Return_done;
+				END_IF
+			ELSE
+				iStepRunning := E_ModbusMasterStateRun.Return_done;
+			END_IF
+			ipModbusSlave[iLoopSlave].ModbusErrorID := iErrorID;
+		END_IF
+	
+	E_ModbusMasterStateRun.ConvertRawData: // Convert raw data
+		IF iLoopSlave <= iAmountSlave THEN
+			ipModbusSlave[iLoopSlave].Convert(iLoopAdr - 1, ADR(arrData));// in case of setParametter iLoopadr := iLoopAdr +1,
+		END_IF
+		iStepRunning := E_ModbusMasterStateRun.Trigger;
+
+	E_ModbusMasterStateRun.Return_done: // Return, done
+		iStepRunning := E_ModbusMasterStateRun.SetParametersWrite;
+		iLoopAdr := 0;
+
+	E_ModbusMasterStateRun.SetParametersWrite :
+		IF  ipModbusSlave[iLoopSlave].NumAddRegionWrite <> 0 
+		AND iLoopAdr <= ipModbusSlave[iLoopSlave].NumAddRegionWrite - 1 THEN // iLoopAdr start from 1
+			iMBAddr := ipModbusSlave[iLoopSlave].AddressWrite + (iLoopAdr*10)*SIZEOF(WORD);// return address word contain value address( modbus) 
+			pDataWrite := ipModbusSlave[iLoopSlave].AddressWrite + (iLoopAdr*10+2)*SIZEOF(WORD);
+			iQuantity := ipModbusSlave[iLoopSlave].AddressWrite + (iLoopAdr*10+1)*SIZEOF(WORD);
+			UnitID 	:=		ipModbusSlave[iLoopSlave].UnitID;
+			Quantity	:=	iQuantity^;
+			MBAddr	:=		iMBAddr^;
+			cbLength	:= 	Quantity *2;
+			pMemoryAddr	:= 	pDataWrite;
+	
+			iLoopAdr := iLoopAdr + 1;
+			IF Quantity = 1 THEN
+				iStepRunning := E_ModbusMasterStateRun.SendRequestWriteSingleRegister;
+			ELSIF Quantity > 1 THEN
+				iStepRunning := E_ModbusMasterStateRun.SendRequestWRiteMultiRegister;
+			END_IF
+		ELSE 
+			iLoopAdr := 0;
+			iStepRunning := E_ModbusMasterStateRun.Return_doneWrite;
+		END_IF
+
+		
+	E_ModbusMasterStateRun.SendRequestWriteSingleRegister :
+		fbModbusMaster.WriteSingleRegister( 	UnitID:= UnitID, 
+												Quantity:= Quantity, 
+												MBAddr:= MBAddr, 
+												cbLength:= cbLength, 
+												pMemoryAddr:= pMemoryAddr, 
+												Execute:=  true,
+												Timeout:= 	UINT_TO_TIME(iTimeout),	
+												BUSY=> bBusy, 
+												Error=> bError , 
+												ErrorId=>iErrorId 
+												);
+		iStepRunning := E_ModbusMasterStateRun.WaitACycleAftersend;
+										
+	E_ModbusMasterStateRun.SendRequestWRiteMultiRegister:
+		fbModbusMaster.WriteRegs( 	UnitID:= UnitID, 
+												Quantity:= Quantity, 
+												MBAddr:= MBAddr, 
+												cbLength:= cbLength, 
+												pMemoryAddr:= pMemoryAddr, 
+												Execute:=  true,
+												Timeout:= 	UINT_TO_TIME(iTimeout),	
+												BUSY=> bBusy, 
+												Error=> bError , 
+												ErrorId=>iErrorId 
+												);
+		iStepRunning := E_ModbusMasterStateRun.WaitACycleAftersend;
+	
+	E_ModbusMasterStateRun.WaitACycleAftersend :
+			fbModbusMaster.WriteRegs( Execute:=  FALSE);
+			fbModbusMaster.WriteSingleRegister( Execute:=  FALSE);
+			IF NOT fbModbusMaster.BUSY AND  NOT fbModbusMaster.Error THEN
+				iStepRunning := E_ModbusMasterStateRun.SetParametersWrite;//iStepRunning := E_StepRunning.Check_If_end_of_transmission_seriesWrite;
+				nNumberFaultRW := 0;
+			END_IF
+			IF fbModbusMaster.Error THEN
+				IF fbModbusMaster.ErrorId = MODBUSERROR_NO_RESPONSE THEN
+					tDelayModbusNoRespon( IN := TRUE, PT := UINT_TO_TIME(iTimeout + 100));
+					IF tDelayModbusNoRespon.Q THEN
+						tDelayModbusNoRespon( IN := FALSE);
+						iStepRunning := E_ModbusMasterStateRun.Return_doneWrite;
+					END_IF
+				ELSE
+					iStepRunning := E_ModbusMasterStateRun.Return_doneWrite;
+				END_IF
+				iStepRunning := E_ModbusMasterStateRun.Return_doneWrite;
+				ipModbusSlave[iLoopSlave].ModbusErrorID := iErrorID;
+			END_IF
+	 E_ModbusMasterStateRun.Return_doneWrite :
+		iLoopAdr := 0;
+		iLoopSlave := iLoopSlave + 1;// next slave
+		IF iLoopSlave > iAmountSlave THEN
+			iLoopSlave := 1;
+		END_IF
+		(*THIS^.tCalculateTimeRW(in := FALSE);
+		tCalculateTimeRW(in := TRUE);*)
+		tonDelayBetweenCyclesReadWrite( IN := TRUE,
+										PT := UINT_TO_TIME(iTimeout + 100));
+		IF tonDelayBetweenCyclesReadWrite.Q THEN
+			tonDelayBetweenCyclesReadWrite(IN := FALSE);
+			iStepRunning := E_ModbusMasterStateRun.Trigger;
+		END_IF
+		
+END_CASE
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StateStopping" Id="{a5bc9935-91a4-4fec-8e4d-82d2573de05f}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD protected StateStopping : BOOL (* Unit is uninitialized*)
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[iStepGeneral	:= E_ModBusMasterState.Uninitialized;
+iStepRunning	:= E_ModbusMasterStateRun.notKnow;
+
+iLoopSlave		:= 1;
+iLoopAdr		:= 0;
+
+fbModbusMaster.Execute := FALSE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StateStoppingDone" Id="{d6ba127c-7dd9-4267-bb45-f2c5c72fb129}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD protected StateStoppingDone : BOOL (* Unit is uninitialized*)
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT bStop THEN
+	iStepGeneral := E_ModBusMasterState.Ready;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StateUninitialized" Id="{02a14e5c-79b0-481c-be40-ba9ce91213fc}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD protected StateUninitialized : BOOL (* Unit is uninitialized*)
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Stop" Id="{d08751b9-9c58-450d-8b27-62019e485f78}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD protected Stop : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iStepGeneral >= E_ModBusMasterState.Running AND iStepGeneral < E_ModBusMasterState.stop THEN
+	iStepGeneral := E_ModBusMasterState.stop;
+END_IF
+bStop := TRUE;
+
+Stop := (iStepGeneral = E_ModBusMasterState.stop_done);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Timeout" Id="{ad915020-ee1a-4de9-9ab5-c123d6eefbc6}" FolderPath="Property\">
+      <Declaration><![CDATA[PROPERTY Timeout : UINT // in milisecond, if not respond in this time , error will raise]]></Declaration>
+      <Get Name="Get" Id="{e727fa0b-eb1e-4906-8989-4b4cf854f9f9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Timeout := iTimeout;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{253b6913-271e-450a-aa23-556dcdc79aa0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[iTimeout := Timeout;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="FB_ModbusMaster">
+      <LineId Id="7" Count="6" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="116" Count="0" />
+      <LineId Id="115" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.Abort">
+      <LineId Id="4" Count="11" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.AnyError.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.Busy.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.ErrorID.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.Init">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.Initialized.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.Name.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.Name.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.ReadData.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.ReadDataSize.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.RegisterSlave">
+      <LineId Id="3" Count="9" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.Reset">
+      <LineId Id="3" Count="11" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.Run">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.ScanTime.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.ScanTime.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.StateInit">
+      <LineId Id="3" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.StateMachine">
+      <LineId Id="3" Count="20" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.StateReady">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.StateRunning">
+      <LineId Id="3" Count="1" />
+      <LineId Id="274" Count="0" />
+      <LineId Id="5" Count="3" />
+      <LineId Id="10" Count="3" />
+      <LineId Id="358" Count="0" />
+      <LineId Id="14" Count="1" />
+      <LineId Id="17" Count="4" />
+      <LineId Id="448" Count="1" />
+      <LineId Id="24" Count="3" />
+      <LineId Id="277" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="36" Count="2" />
+      <LineId Id="419" Count="0" />
+      <LineId Id="422" Count="0" />
+      <LineId Id="425" Count="10" />
+      <LineId Id="424" Count="0" />
+      <LineId Id="423" Count="0" />
+      <LineId Id="438" Count="9" />
+      <LineId Id="437" Count="0" />
+      <LineId Id="436" Count="0" />
+      <LineId Id="421" Count="0" />
+      <LineId Id="211" Count="0" />
+      <LineId Id="213" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="451" Count="1" />
+      <LineId Id="455" Count="0" />
+      <LineId Id="453" Count="0" />
+      <LineId Id="212" Count="0" />
+      <LineId Id="454" Count="0" />
+      <LineId Id="456" Count="0" />
+      <LineId Id="49" Count="1" />
+      <LineId Id="286" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="216" Count="1" />
+      <LineId Id="470" Count="0" />
+      <LineId Id="475" Count="1" />
+      <LineId Id="479" Count="0" />
+      <LineId Id="477" Count="1" />
+      <LineId Id="471" Count="0" />
+      <LineId Id="473" Count="0" />
+      <LineId Id="472" Count="0" />
+      <LineId Id="411" Count="0" />
+      <LineId Id="219" Count="0" />
+      <LineId Id="214" Count="0" />
+      <LineId Id="53" Count="3" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="68" Count="1" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="120" Count="0" />
+      <LineId Id="119" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="365" Count="0" />
+      <LineId Id="367" Count="0" />
+      <LineId Id="98" Count="1" />
+      <LineId Id="374" Count="0" />
+      <LineId Id="100" Count="5" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="385" Count="0" />
+      <LineId Id="390" Count="0" />
+      <LineId Id="386" Count="0" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="389" Count="0" />
+      <LineId Id="109" Count="1" />
+      <LineId Id="278" Count="0" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="129" Count="0" />
+      <LineId Id="123" Count="0" />
+      <LineId Id="392" Count="9" />
+      <LineId Id="391" Count="0" />
+      <LineId Id="402" Count="1" />
+      <LineId Id="384" Count="0" />
+      <LineId Id="221" Count="10" />
+      <LineId Id="220" Count="0" />
+      <LineId Id="125" Count="0" />
+      <LineId Id="124" Count="0" />
+      <LineId Id="253" Count="0" />
+      <LineId Id="404" Count="0" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="174" Count="1" />
+      <LineId Id="287" Count="0" />
+      <LineId Id="480" Count="9" />
+      <LineId Id="491" Count="0" />
+      <LineId Id="490" Count="0" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="179" Count="0" />
+      <LineId Id="181" Count="0" />
+      <LineId Id="381" Count="2" />
+      <LineId Id="275" Count="1" />
+      <LineId Id="464" Count="3" />
+      <LineId Id="469" Count="0" />
+      <LineId Id="468" Count="0" />
+      <LineId Id="463" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.StateStopping">
+      <LineId Id="3" Count="6" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.StateStoppingDone">
+      <LineId Id="3" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.StateUninitialized">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.Stop">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.Timeout.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ModbusMaster.Timeout.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

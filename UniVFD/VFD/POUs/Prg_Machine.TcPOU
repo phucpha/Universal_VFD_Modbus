@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Prg_Machine" Id="{c1dbf7b4-062a-4b8a-ba63-effe6d29d08f}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Prg_Machine
+VAR
+	fbModbusMaster	: FB_ModbusMaster;
+	ABBAcs480 : FB_VFD_ABB_ACS480;
+	Mdriver : fB_VFD_Mdriver;
+	arrIfVFD : ARRAY[0..numberOfVFD-1] OF I_UniversalVFD;
+	emkoSs	: FB_TemperatureRelativeHumiditySensor_Emko;
+	bInit	: BOOL;
+	bAbort : BOOL;
+	bFirstCycle	: BOOL := TRUE;
+	bModbusRun	: BOOL;
+	hzControl	: LREAL;
+	arrVfdState	: ARRAY [0..iVFDS_PER_PAGE-1] OF E_VisuCtrlVfdState; 
+	arrVfdFrame	: ARRAY [0..iVFDS_PER_PAGE-1] OF ST_VisuCtrlVfdFrame;
+	iloop		: UINT;
+	lrTemp	: LREAL;
+	lrhumidity	: LREAL;
+END_VAR
+VAR CONSTANT
+	iVFDS_PER_PAGE : UINT := 2;
+	numberOfVFD	: UINT := 2;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bFirstCycle THEN
+	Mdriver.FirstCycle( sName := 'M_driver',
+						iUnitID := 4 );
+	ABBAcs480.FirstCycle( sName := 'ABB acs480',
+							iUnitID := 5);			
+	emkoSs.FirstCycle( sName := 'ss 01',
+						iUnitID := 11);
+	arrIfVFD[0] := Mdriver;
+	arrIfVFD[1] := ABBAcs480;				
+	IF fbModbusMaster.Init() THEN
+		//fbModbusMaster.RegisterSlave( ModbusSlave := ABBAcs480);
+		fbModbusMaster.RegisterSlave( ModbusSlave := Mdriver);
+		fbModbusMaster.RegisterSlave( ModbusSlave := emkoSs);
+		fbModbusMaster.Timeout := 1000;
+		bFirstCycle := FALSE;
+	END_IF
+END_IF
+fbModbusMaster.Run();
+fbModbusMaster();
+Mdriver();
+ABBAcs480();
+lrTemp := emkoSs.Temperature;
+lrhumidity := emkoSs.RelativeHumidity;
+(*visu*)
+FOR iloop := 0 TO numberOfVFD-1 DO
+	arrVfdFrame[iLoop].lrCurrent		:= arrIfVFD[iloop].Current;
+	arrVfdFrame[iLoop].bError			:= arrIfVFD[iloop].error;
+	arrVfdFrame[iLoop].lrHz_actual		:= arrIfVFD[iloop].HzActual;
+	arrVfdFrame[iLoop].eStatus			:= arrIfVFD[iloop].Status;
+	arrVfdFrame[iLoop].sStatus			:= TO_STRING(arrVfdFrame[iLoop].eStatus);
+	arrVfdFrame[iLoop].eState			:= arrIfVFD[iloop].State;
+	arrVfdFrame[iloop].sState			:= TO_STRING(arrVfdFrame[iLoop].eState);
+	arrVfdFrame[iloop].errorID			:= arrIfVFD[iloop].errorID;	
+	arrVfdFrame[iloop].sName			:= arrIfVFD[iloop].Name;	
+	IF arrVfdFrame[iLoop].btnReset THEN
+		arrVfdFrame[iLoop].btnReset := FALSE;
+		arrVfdState[iLoop] := VISU_CTRL_VFDS_RESET;
+	END_IF
+	
+	IF arrVfdFrame[iLoop].btnAbort THEN
+		arrVfdFrame[iLoop].btnAbort	:= FALSE;
+		arrVfdState[iLoop] := VISU_CTRL_VFDS_ABORT;						
+	END_IF	
+	CASE arrVfdState[iLoop] OF
+		
+		VISU_CTRL_VFDS_WAIT_FOR_CMD:
+			IF arrVfdFrame[iLoop].btnInit THEN
+				arrVfdFrame[iLoop].btnInit	:= FALSE;
+				arrVfdState[iLoop] := VISU_CTRL_VFDS_INIT;
+				
+			ELSIF arrVfdFrame[iLoop].btnStop THEN
+				arrVfdFrame[iLoop].btnStop	:= FALSE;
+				arrVfdState[iLoop] := VISU_CTRL_VFDS_STOP;
+				
+			ELSIF arrVfdFrame[iLoop].btnRunForward THEN
+				arrVfdFrame[iLoop].btnRunForward	:= FALSE;
+				arrVfdState[iLoop] := VISU_CTRL_VFDS_RUN_FORWARD;
+				
+			ELSIF arrVfdFrame[iLoop].btnRunReverse THEN
+				arrVfdFrame[iLoop].btnRunReverse	:= FALSE;
+				arrVfdState[iLoop] := VISU_CTRL_VFDS_RUN_REVERSE;						
+				
+			END_IF
+			
+		VISU_CTRL_VFDS_INIT:					
+			arrIfVFD[iloop].MR_Init();
+			IF arrIfVFD[iloop].Active AND NOT arrIfVFD[iloop].Busy THEN
+				arrVfdState[iLoop] := VISU_CTRL_VFDS_WAIT_FOR_CMD;
+			END_IF
+			
+		VISU_CTRL_VFDS_RESET:		 			
+			arrIfVFD[iloop].MR_Reset();
+			IF NOT arrIfVFD[iloop].Error AND NOT arrIfVFD[iloop].Busy THEN
+				arrVfdState[iLoop] := VISU_CTRL_VFDS_WAIT_FOR_CMD;
+			END_IF
+		
+		VISU_CTRL_VFDS_RUN_FORWARD:	
+			arrIfVFD[iloop].MR_RunForward(arrVfdFrame[iLoop].lrHz_Control);		
+			IF arrIfVFD[iloop].isRunForward AND NOT arrIfVFD[iloop].Busy THEN
+				arrVfdState[iLoop] := VISU_CTRL_VFDS_WAIT_FOR_CMD;
+			END_IF
+		
+		VISU_CTRL_VFDS_RUN_REVERSE:
+			arrIfVFD[iloop].MR_RunReverse(arrVfdFrame[iLoop].lrHz_Control);
+			IF arrIfVFD[iloop].isRunReverse AND NOT arrIfVFD[iloop].Busy THEN
+				arrVfdState[iLoop] := VISU_CTRL_VFDS_WAIT_FOR_CMD;
+			END_IF
+			
+		VISU_CTRL_VFDS_STOP:
+			arrIfVFD[iloop].MR_Stop();
+			IF arrIfVFD[iloop].isStop AND NOT arrIfVFD[iloop].Busy THEN
+				arrVfdState[iLoop] := VISU_CTRL_VFDS_WAIT_FOR_CMD;
+			END_IF
+			
+		VISU_CTRL_VFDS_ABORT:
+			arrIfVFD[iloop].MR_Abort();
+			IF NOT arrIfVFD[iloop].Active AND NOT arrIfVFD[iloop].Busy	THEN
+				arrVfdState[iLoop] := VISU_CTRL_VFDS_WAIT_FOR_CMD;
+			END_IF
+					
+	END_CASE
+END_FOR]]></ST>
+    </Implementation>
+    <LineIds Name="Prg_Machine">
+      <LineId Id="13" Count="1" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="210" Count="1" />
+      <LineId Id="180" Count="2" />
+      <LineId Id="217" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="212" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="183" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="218" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="186" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="213" Count="0" />
+      <LineId Id="148" Count="6" />
+      <LineId Id="138" Count="0" />
+      <LineId Id="207" Count="0" />
+      <LineId Id="139" Count="7" />
+      <LineId Id="137" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="73" Count="20" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="94" Count="4" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="99" Count="3" />
+      <LineId Id="157" Count="0" />
+      <LineId Id="103" Count="4" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="108" Count="2" />
+      <LineId Id="159" Count="0" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="112" Count="5" />
+      <LineId Id="161" Count="0" />
+      <LineId Id="118" Count="2" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="216" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

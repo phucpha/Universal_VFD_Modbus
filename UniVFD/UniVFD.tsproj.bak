@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.56">
+	<Project ProjectGUID="{D4FDDFEF-7B68-4E7C-B9E9-E11C71A57C16}" TargetNetId="192.168.1.68.1.1" ShowHideConfigurations="#x3c7">
+		<System>
+			<Tasks>
+				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
+					<Name>Machine</Name>
+				</Task>
+			</Tasks>
+		</System>
+		<Plc>
+			<Project File="VFD.xti"/>
+		</Plc>
+		<Io>
+			<Device File="Device 1 (NOV-DP-RAM).xti" Id="1"/>
+			<Device File="Device 4 (COM Port).xti" Id="4"/>
+		</Io>
+	</Project>
+	<Mappings>
+		<MappingInfo Identifier="{00000000-2001-0850-0020-500840000403}" Id="#x02030010"/>
+	</Mappings>
+</TcSmProject>

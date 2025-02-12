@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="E_FileLoggerSetNewPathState" Id="{42250bc3-0a38-4d5c-bdd3-648aa3119205}">
+    <Declaration><![CDATA[{attribute 'strict'}
+TYPE E_FileLoggerSetNewPathState :
+(
+	FILE_LOGGER_SET_NEW_PATH_CHANGE_PATH			:= 0,
+	FILE_LOGGER_SET_NEW_PATH_DONE					:= 10
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
