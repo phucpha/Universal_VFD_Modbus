@@ -91,9 +91,6 @@
     <Compile Include="POUs\VFD\I_UniversalVFD.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\VFD\NewOne.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\VFD\U_Word2Int.TcDUT">
       <SubType>Code</SubType>
     </Compile>
