@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FUN_MergeStrings4" Id="{4f88187d-1faa-4d5f-88fc-38f1e900ee4b}" SpecialFunc="None">
+    <Declaration><![CDATA[(* 
+:Description: This function is used to merge 5 strings
+*)
+FUNCTION FUN_MergeStrings4 : STRING
+VAR_INPUT
+	sStr1	: STRING;			(* Fifth string in merge row *)
+	sStr2	: STRING;			(* Fourth string in merge row *)
+	sStr3	: STRING;			(* Fourth string in merge row *)
+	sStr4	: STRING;			(* Fourth string in merge row *)
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FUN_MergeStrings4 := CONCAT(sStr1,sStr2);
+FUN_MergeStrings4 := CONCAT(FUN_MergeStrings4,sStr3);
+FUN_MergeStrings4 := CONCAT(FUN_MergeStrings4,sStr4);
+]]></ST>
+    </Implementation>
+    <LineIds Name="FUN_MergeStrings4">
+      <LineId Id="3" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

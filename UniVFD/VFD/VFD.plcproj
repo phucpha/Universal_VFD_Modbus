@@ -18,6 +18,69 @@
     <LibraryReferences>{e717c3bb-c74d-4080-bd49-8fbb32d76fdc}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Class Diagram.TcCD">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUT\Common\U_Word2Int.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUT\File Logger\E_FileLoggerAddLogsState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUT\File Logger\E_FileLoggerInitState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUT\File Logger\E_FileLoggerSetNewPathState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUT\File Logger\E_FileLoggerState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUT\M_Driver\E_VfdMdriverFaultInfor.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUT\Universal_Modbus\E_ModBusMasterState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUT\Universal_Modbus\E_ModbusMasterStateRun.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUT\VFD\E_VFD_State.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUT\VFD\E_VFD_Status.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUT\Visu\E_VisuCtrlVfdState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUT\Visu\ST_VisuCtrlVfdFrame.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FC\FC_ScaleValue.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FC\FUN_MergeLongStrings10.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FC\FUN_MergeStrings10.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FC\FUN_MergeStrings3.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FC\FUN_MergeStrings4.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FC\FUN_MergeStrings5.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FC\FUN_MergeStrings6.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FC\F_InRange.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GVL.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
@@ -28,40 +91,13 @@
     <Compile Include="POUs\EmkoTemperature\FB_TemperatureRelativeHumiditySensor_Emko.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FC\FUN_MergeLongStrings10.TcPOU">
+    <Compile Include="POUs\File Logger\FB_FileLogger.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FC\FUN_MergeStrings10.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FC\FUN_MergeStrings3.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FC\FUN_MergeStrings4.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FC\FUN_MergeStrings5.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FC\FUN_MergeStrings6.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FC\F_InRange.TcPOU">
+    <Compile Include="POUs\File Logger\I_FileLogger.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Prg_Machine.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Units\Motor\E_VfdMdriverFaultInfor.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Units\Motor\FC_ScaleValue.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Universal Modbus RTU\EState\E_ModBusMasterState.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Universal Modbus RTU\EState\E_ModbusMasterStateRun.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Universal Modbus RTU\FB_ModbusMaster.TcPOU">
@@ -71,12 +107,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Universal Modbus RTU\I_ModbusSlave.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\VFD\E_VFD_State.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\VFD\E_VFD_Status.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\VFD\FB_UniversalVFDModbus.TcPOU">
@@ -91,31 +121,13 @@
     <Compile Include="POUs\VFD\I_UniversalVFD.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\VFD\U_Word2Int.TcDUT">
+    <Compile Include="TEST\FB_ModbusMaster_Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Visu\E_VisuCtrlVfdState.TcDUT">
+    <Compile Include="TEST\FB_ModbusSlave_Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Visu\ST_VisuCtrlVfdFrame.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Universal\DUTs\Utilities\File Logger\E_FileLoggerAddLogsState.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Universal\DUTs\Utilities\File Logger\E_FileLoggerInitState.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Universal\DUTs\Utilities\File Logger\E_FileLoggerSetNewPathState.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Universal\DUTs\Utilities\File Logger\E_FileLoggerState.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Universal\Utilities\File Logger\FB_FileLogger.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Universal\Utilities\File Logger\I_FileLogger.TcIO">
+    <Compile Include="TEST\PGR_Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -138,24 +150,29 @@
     </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_Module</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="TcUnit">
+      <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DUT" />
+    <Folder Include="DUT\File Logger" />
+    <Folder Include="DUT\M_Driver" />
+    <Folder Include="DUT\Common" />
+    <Folder Include="DUT\VFD" />
+    <Folder Include="DUT\Universal_Modbus" />
+    <Folder Include="DUT\Visu" />
+    <Folder Include="FC" />
+    <Folder Include="POUs\File Logger" />
+    <Folder Include="TEST" />
     <Folder Include="POUs" />
-    <Folder Include="POUs\FC" />
     <Folder Include="POUs\EmkoTemperature" />
-    <Folder Include="POUs\Visu" />
-    <Folder Include="POUs\Units" />
-    <Folder Include="POUs\Units\Motor" />
     <Folder Include="POUs\VFD" />
     <Folder Include="POUs\Universal Modbus RTU" />
-    <Folder Include="POUs\Universal Modbus RTU\EState" />
     <Folder Include="Universal" />
-    <Folder Include="Universal\DUTs" />
-    <Folder Include="Universal\DUTs\Utilities" />
-    <Folder Include="Universal\DUTs\Utilities\File Logger" />
     <Folder Include="Universal\Utilities" />
-    <Folder Include="Universal\Utilities\File Logger" />
   </ItemGroup>
   <ItemGroup>
     <None Include="VFD.tmc">

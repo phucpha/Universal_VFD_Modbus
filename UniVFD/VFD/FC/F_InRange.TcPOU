@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="F_InRange" Id="{c555f3df-6dc2-4ea3-95b0-417bf7fc6ba6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_InRange : BOOL // return true if value in [bound1, bound2] or in [bound2, bound1] else return false
+VAR_INPUT
+	bound1 : LREAL;
+	bound2 : LREAL;
+	value	: LREAL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[F_InRange := MIN(bound1, bound2)  <= value AND value <= MAX( bound1, bound2);
+]]></ST>
+    </Implementation>
+    <LineIds Name="F_InRange">
+      <LineId Id="7" Count="0" />
+      <LineId Id="20" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
