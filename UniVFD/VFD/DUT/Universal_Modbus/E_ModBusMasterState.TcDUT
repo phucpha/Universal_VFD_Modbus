@@ -9,8 +9,8 @@ TYPE E_ModBusMasterState :
 	Initializing := 10,//10
 	Ready	:= 20	,//20
 	Running		:= 30,//30
-	stop		:= 200,//200
-	stop_done	:= 210//210
+	Stop		:= 200,//200
+	Stop_done	:= 210//210
 	
 );
 END_TYPE

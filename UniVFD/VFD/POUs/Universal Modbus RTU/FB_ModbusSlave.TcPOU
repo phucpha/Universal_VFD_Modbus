@@ -3,20 +3,31 @@
   <POU Name="FB_ModbusSlave" Id="{3c28a97a-7b9e-4799-881a-cc6e3fde9dc8}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_ModbusSlave IMPLEMENTS I_ModbusSlave
 VAR
-	iUnitID			: 		BYTE;
-	arrAddress		:		ARRAY [0..50] OF ARRAY [0..2] OF WORD;
-	iNumAddRegion	:		UINT;
+	iUnitID	:	BYTE; // address of the Slave
+	arrAddressRead	:	ARRAY [0..50] OF ARRAY [0..2] OF WORD;
+	(*arrAddressRead[x][y]: +x : index of Region Read.  arrAddressRead[0]: the first region Read.
+							+y:
+								case y of
+									0: Register address for Read
+									1: Number of register for read
+									2: Function Read
+					 *)
+	iNumAddRegionRead	:	UINT;
 	
-	arrAddressWrite		: ARRAY [0..20] OF ARRAY [0..9] OF WORD;// write Multiple or single register
-	(*// the 20 is max number of region write,
-		array[0..9] :  +[0] :  the address of this region.
-						+[1] : number of register will be write
-						+ [2..9] : max 8 value for write
+	arrAddressWrite		: ARRAY [0..20] OF ARRAY [0..10] OF WORD;// write Multiple or single register
+	(* the 20 is max number of region write,
+		arrAddressWrite[x][y] : +x: index of Region Read.  arrAddressRead[0]: the first region Read. 
+								+y:
+									case y of
+										0 :  Register address for Write
+										1 : number of register will be write => modbus master automatic choose Function Write( single Register or Multi Regiseter)
+										2..9 : max 8 value for write
+										10: Write Function : e.g E_ModbusFunction.WriteSingleCoil
+															
 	*)
 	iNumAddRegionWrite	: UINT;
 	
-	bSwap			:		BOOL;
-	
+	bSwap			:		BOOL; // swap word receive from modbus master for convert
 	sName			:		STRING;
 	bFirstCycle 	: 		BOOL := TRUE;
 	iModbusErrorID	:		MODBUS_ERRORS;
@@ -25,14 +36,14 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Property Name="Address" Id="{6bad1251-2173-4dad-ba55-b0ca54c51b4b}">
-      <Declaration><![CDATA[PROPERTY Address : POINTER TO WORD]]></Declaration>
+    <Property Name="AddressRead" Id="{6bad1251-2173-4dad-ba55-b0ca54c51b4b}">
+      <Declaration><![CDATA[PROPERTY AddressRead : POINTER TO WORD]]></Declaration>
       <Get Name="Get" Id="{985bce2e-167a-45be-8089-4bec8ed22891}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[Address := ADR(arrAddress);]]></ST>
+          <ST><![CDATA[AddressRead := ADR(arrAddressRead);]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -109,14 +120,14 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Property Name="NumAddRegion" Id="{b5abfa30-10e8-4954-8477-81f742d0936e}">
-      <Declaration><![CDATA[PROPERTY NumAddRegion : UINT]]></Declaration>
+    <Property Name="NumAddRegionRead" Id="{b5abfa30-10e8-4954-8477-81f742d0936e}">
+      <Declaration><![CDATA[PROPERTY NumAddRegionRead : UINT]]></Declaration>
       <Get Name="Get" Id="{f25e2842-516b-4ae1-85e4-95db72ca8802}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[NumAddRegion := iNumAddRegion;]]></ST>
+          <ST><![CDATA[NumAddRegionRead := iNumAddRegionRead;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -153,7 +164,7 @@ END_VAR
     <LineIds Name="FB_ModbusSlave">
       <LineId Id="2" Count="0" />
     </LineIds>
-    <LineIds Name="FB_ModbusSlave.Address.Get">
+    <LineIds Name="FB_ModbusSlave.AddressRead.Get">
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_ModbusSlave.AddressWrite.Get">
@@ -178,7 +189,7 @@ END_VAR
     <LineIds Name="FB_ModbusSlave.Name.Set">
       <LineId Id="2" Count="0" />
     </LineIds>
-    <LineIds Name="FB_ModbusSlave.NumAddRegion.Get">
+    <LineIds Name="FB_ModbusSlave.NumAddRegionRead.Get">
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_ModbusSlave.NumAddRegionWrite.Get">

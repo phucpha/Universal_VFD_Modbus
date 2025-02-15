@@ -5,21 +5,20 @@
 {attribute 'strict'}
 TYPE E_ModbusMasterStateRun :
 (
-	Trigger 		:=0, //0
-	SetParameters 	:= 10, // 10
-	SendRequest		:= 20,  // 20
-	Wait_respond	:= 40, // 40
-	ConvertRawData	:= 50, // 50
-	Return_done		:=60 ,// 60
+	CheckNumberSlaveRegistered 	:=0, 
+	SetParametersRead 	:= 10,
+	SendRequestRead		:= 20,
+	WaitReadRespond	:= 40,
+	ConvertRawData	:= 50,
+	ReturnReadDone		:=60,
 	
 	SetParametersWrite 	:= 70,
-	SendRequestWriteSingleRegister	:= 80,
-	SendRequestWRiteMultiRegister	:= 85,
-	WaitACycleAftersend := 90,
-	Return_doneWrite	:=120,
+	SendRequestWrite	:= 80,
+	WaitWriteRespond := 90,
+	ReturnWriteDone	:=120,
 
 	
-	notKnow			:= 210//210
+	notKnow			:= 210
 
 );
 END_TYPE

@@ -7,6 +7,9 @@
     <PouCall>
       <Name>Prg_Machine</Name>
     </PouCall>
+    <PouCall>
+      <Name>PGR_Test</Name>
+    </PouCall>
     <TaskFBGuid>{995a2342-ee9e-438c-8c6a-d0d0eb5e4d49}</TaskFBGuid>
     <Fb_init>{b5f72abb-6c96-492d-8c9e-79b097954aa3}</Fb_init>
     <Fb_exit>{531b994c-7823-47f2-9547-191b7fd18ab8}</Fb_exit>

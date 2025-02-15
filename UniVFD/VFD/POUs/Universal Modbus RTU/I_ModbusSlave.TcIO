@@ -3,8 +3,8 @@
   <Itf Name="I_ModbusSlave" Id="{f6cc8562-becd-4eee-9889-c7c39fc121d0}">
     <Declaration><![CDATA[INTERFACE I_ModbusSlave
 ]]></Declaration>
-    <Property Name="Address" Id="{dee7b5b1-c4b0-40ec-878a-82d2b76b0dd8}">
-      <Declaration><![CDATA[PROPERTY Address : POINTER TO WORD]]></Declaration>
+    <Property Name="AddressRead" Id="{dee7b5b1-c4b0-40ec-878a-82d2b76b0dd8}">
+      <Declaration><![CDATA[PROPERTY AddressRead : POINTER TO WORD]]></Declaration>
       <Get Name="Get" Id="{5fb96f44-6dc5-461f-869c-bc965aa1fa5c}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
@@ -49,8 +49,8 @@ END_VAR
         <Declaration><![CDATA[]]></Declaration>
       </Set>
     </Property>
-    <Property Name="NumAddRegion" Id="{d937ec07-11bc-425a-8979-6effea6529dd}">
-      <Declaration><![CDATA[PROPERTY NumAddRegion : UINT]]></Declaration>
+    <Property Name="NumAddRegionRead" Id="{d937ec07-11bc-425a-8979-6effea6529dd}">
+      <Declaration><![CDATA[PROPERTY NumAddRegionRead : UINT]]></Declaration>
       <Get Name="Get" Id="{52c4942d-5459-4a68-bb15-769a28af736f}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>

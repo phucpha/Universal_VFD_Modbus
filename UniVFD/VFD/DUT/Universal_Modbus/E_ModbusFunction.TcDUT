@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="E_ModbusFunction" Id="{7d0ca885-4ac9-4e0f-8901-e08b496b5d8f}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+TYPE E_ModbusFunction :
+(	
+	ReadCoils	:= 1,
+	ReadDisCreteInputs := 2,
+	ReadHoldingRegisters := 3, 
+	ReadInputRegisters := 4,
+	WriteSingleCoil := 5,
+	WriteSingleRegister := 6,
+	WriteMultipleCoils := 15,
+	WriteMultipleRegisters := 16
+) WORD;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

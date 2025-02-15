@@ -37,10 +37,10 @@ END_VAR
       <Implementation>
         <ST><![CDATA[SUPER^.FirstCycle( sName := sName,
 					iUnitID := iUnitID);
-arrAddress[0][0] := 0;
-arrAddress[0][1] := 2;
-arrAddress[0][2] := 1;
-iNumAddRegion := 1;
+arrAddressRead[0][0] := 0;
+arrAddressRead[0][1] := 2;
+arrAddressRead[0][2] := 1;
+iNumAddRegionRead:= 1;
 iNumAddRegionWrite := 0;]]></ST>
       </Implementation>
     </Method>

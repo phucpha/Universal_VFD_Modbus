@@ -89,23 +89,28 @@ VFD_CTRL_STOP_SPEED_DOWN := 2#1000_0001;
 VFD_CTRL_RUN_EMERGENCY_STOP := 2#0001_0000_0001;
 
 // actual state	
-arrAddress[0][0] := 3;
-arrAddress[0][1] := 1;
+	arrAddressRead[0][0] := 3;
+	arrAddressRead[0][1] := 1;
+	arrAddressRead[0][2] := E_ModbusFunction.ReadHoldingRegisters;
 
 //mode0 address = 40000 + function*100 + sub function -1
 	// actual hz  
-	arrAddress[1][0] := 105; // 01.06
-	arrAddress[1][1] := 6;
+	arrAddressRead[1][0] := 105; // 01.06
+	arrAddressRead[1][1] := 6;
+	arrAddressRead[1][2] := E_ModbusFunction.ReadHoldingRegisters;
 	
-	arrAddress[2][0] := 112; // 01.13
-	arrAddress[2][1] := 2;
+	arrAddressRead[2][0] := 112; // 01.13
+	arrAddressRead[2][1] := 2;
+	arrAddressRead[2][2] := E_ModbusFunction.ReadHoldingRegisters;
 	
-	arrAddress[3][0] := 119; // 01.20
-	arrAddress[3][1] := 1;
+	arrAddressRead[3][0] := 119; // 01.20
+	arrAddressRead[3][1] := 1;
+	arrAddressRead[3][2] := E_ModbusFunction.ReadHoldingRegisters;
 	
-	arrAddress[4][0] := 101; // 01.20
-	arrAddress[4][1] := 1;
-iNumAddRegion	:= 5;
+	arrAddressRead[4][0] := 101; // 01.20
+	arrAddressRead[4][1] := 1;
+	arrAddressRead[4][2] := E_ModbusFunction.ReadHoldingRegisters;
+iNumAddRegionRead	:= 5;
 
 /////write control WORD VFD, // use ctrol word and frequency in 1 modbus write
 arrAddressWrite[iCTRL_WORD][0]	:= 0;
@@ -231,9 +236,16 @@ SUPER^.MS_RunReverse();]]></ST>
       <LineId Id="60" Count="0" />
       <LineId Id="71" Count="0" />
       <LineId Id="19" Count="3" />
+      <LineId Id="90" Count="0" />
       <LineId Id="72" Count="0" />
       <LineId Id="23" Count="4" />
-      <LineId Id="73" Count="7" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="73" Count="2" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="76" Count="2" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="79" Count="1" />
+      <LineId Id="89" Count="0" />
       <LineId Id="28" Count="9" />
       <LineId Id="54" Count="0" />
       <LineId Id="38" Count="9" />

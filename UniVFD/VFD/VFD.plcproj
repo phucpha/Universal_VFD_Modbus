@@ -39,6 +39,9 @@
     <Compile Include="DUT\M_Driver\E_VfdMdriverFaultInfor.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUT\Universal_Modbus\E_ModbusFunction.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUT\Universal_Modbus\E_ModBusMasterState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
