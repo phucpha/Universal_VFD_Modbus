@@ -71,7 +71,7 @@ iStepRunning	:= E_ModbusMasterStateRun.CheckNumberSlaveRegistered;
 iLoopSlave		:= 1;
 iLoopAdr		:= 0;
 
-fbModbusMaster.Execute := FALSE;
+fbModbusMaster(Execute := FALSE);
 
 Abort := TRUE;]]></ST>
       </Implementation>
@@ -263,22 +263,22 @@ END_IF]]></ST>
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[CASE iStepGeneral OF
-		E_ModBusMasterState.Uninitialized:  //Uninitialized
+		E_ModBusMasterState.Uninitialized:  
 			StateUninitialized();
 	
-		E_ModBusMasterState.Initializing: //Initializing
+		E_ModBusMasterState.Initializing: 
 			StateInit();
 	
-		E_ModBusMasterState.Ready: //Ready
+		E_ModBusMasterState.Ready: 
 			StateReady();
 		
-		E_ModBusMasterState.Running: //Running
+		E_ModBusMasterState.Running: 
 			StateRunning();
 						
-		E_ModBusMasterState.stop: //stop
+		E_ModBusMasterState.stop:
 			StateStopping();
 			
-		E_ModBusMasterState.stop_done: //stop done
+		E_ModBusMasterState.stop_done:
 			StateStoppingDone();
 END_CASE
 	
@@ -514,7 +514,7 @@ iStepRunning	:= E_ModbusMasterStateRun.notKnow;
 iLoopSlave		:= 1;
 iLoopAdr		:= 0;
 
-fbModbusMaster.Execute := FALSE;
+fbModbusMaster(Execute := FALSE);
 ]]></ST>
       </Implementation>
     </Method>

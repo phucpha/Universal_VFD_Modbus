@@ -116,6 +116,7 @@ iNumAddRegionRead	:= 5;
 arrAddressWrite[iCTRL_WORD][0]	:= 0;
 arrAddressWrite[iCTRL_WORD][1]	:= 2;
 arrAddressWrite[iCTRL_WORD][2]	:= VFD_CTRL_STOP_FREE;
+arrAddressWrite[iCTRL_WORD][10]	:= E_ModbusFunction.WriteMultipleRegisters;
 
 // Frequency
 //arrAddressWrite[iCTRL_FREQUENCY_WORD][0]	:= 1;
@@ -246,7 +247,9 @@ SUPER^.MS_RunReverse();]]></ST>
       <LineId Id="88" Count="0" />
       <LineId Id="79" Count="1" />
       <LineId Id="89" Count="0" />
-      <LineId Id="28" Count="9" />
+      <LineId Id="28" Count="5" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="34" Count="3" />
       <LineId Id="54" Count="0" />
       <LineId Id="38" Count="9" />
       <LineId Id="14" Count="0" />

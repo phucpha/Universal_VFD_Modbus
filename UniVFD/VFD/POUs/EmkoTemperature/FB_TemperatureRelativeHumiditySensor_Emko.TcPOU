@@ -39,7 +39,7 @@ END_VAR
 					iUnitID := iUnitID);
 arrAddressRead[0][0] := 0;
 arrAddressRead[0][1] := 2;
-arrAddressRead[0][2] := 1;
+arrAddressRead[0][2] := E_ModbusFunction.ReadInputRegisters;
 iNumAddRegionRead:= 1;
 iNumAddRegionWrite := 0;]]></ST>
       </Implementation>

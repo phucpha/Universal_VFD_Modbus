@@ -81,14 +81,17 @@ VFD_CTRL_STOP_SPEED_DOWN	:= 6;
 ///  actual hz, current, voltage
 arrAddressRead[0][0] := 4097;
 arrAddressRead[0][1]	:= 6;
+arrAddressRead[0][2]	:= E_ModbusFunction.ReadHoldingRegisters;
 
 // actual state	
 arrAddressRead[1][0] := 16#3000;
 arrAddressRead[1][1]	:= 1;
+arrAddressRead[1][2]	:= E_ModbusFunction.ReadHoldingRegisters;
 
 // fault infor
 arrAddressRead[2][0] := 16#8000;
 arrAddressRead[2][1]	:= 1;
+arrAddressRead[2][2]	:= E_ModbusFunction.ReadHoldingRegisters;
 
 iNumAddRegionRead	:= 3;
 
@@ -96,17 +99,18 @@ iNumAddRegionRead	:= 3;
 arrAddressWrite[iCTRL_WORD][0]	:= 16#2000;
 arrAddressWrite[iCTRL_WORD][1]	:= 1;
 arrAddressWrite[iCTRL_WORD][2]	:= VFD_CTRL_STOP_FREE;
-
+arrAddressWrite[iCTRL_WORD][10]	:= E_ModbusFunction.WriteSingleRegister;
 // Frequency
-arrAddressWrite[1][0]	:= 4096;
-arrAddressWrite[1][1]	:= 1;
+arrAddressWrite[iCTRL_FREQUENCY_WORD][0]	:= 4096;
+arrAddressWrite[iCTRL_FREQUENCY_WORD][1]	:= 1;
 							(*MUST BE CARE FULL WHEN USE FLOATING POINT CONVERT*)
-arrAddressWrite[1][2]	:= LREAL_TO_WORD( FC_ScaleValue(	rangeRawMin := 0,
+arrAddressWrite[iCTRL_FREQUENCY_WORD][2]	:= LREAL_TO_WORD( FC_ScaleValue(	rangeRawMin := 0,
 															rangeRawMax := 50,
 															RangeScaleMin :=0,
 															RangeScaleMax := 10000,
 															ValueRaw := 0)
 										  );
+arrAddressWrite[iCTRL_FREQUENCY_WORD][10]	:= E_ModbusFunction.WriteSingleRegister;
 										  
 iNumAddRegionWrite := 2;
 
@@ -182,9 +186,16 @@ SUPER^.MS_RunReverse();]]></ST>
       <LineId Id="61" Count="4" />
       <LineId Id="60" Count="0" />
       <LineId Id="15" Count="2" />
-      <LineId Id="19" Count="18" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="19" Count="3" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="23" Count="3" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="27" Count="10" />
       <LineId Id="54" Count="0" />
-      <LineId Id="38" Count="9" />
+      <LineId Id="38" Count="5" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="44" Count="3" />
       <LineId Id="14" Count="0" />
       <LineId Id="8" Count="0" />
     </LineIds>
