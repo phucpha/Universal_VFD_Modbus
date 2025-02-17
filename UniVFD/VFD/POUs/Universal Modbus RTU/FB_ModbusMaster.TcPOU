@@ -367,7 +367,7 @@ END_VAR
 			E_ModbusFunction.ReadInputRegisters:
 				fbModbusMaster.ReadInputRegs(Execute := FALSE);
 		END_CASE
-		
+		ipModbusSlave[iLoopSlave].ModbusErrorID := iErrorID;
 		IF NOT fbModbusMaster.BUSY AND NOT fbModbusMaster.Error THEN
 			iStepRunning := E_ModbusMasterStateRun.ConvertRawData;
 			nNumberFaultRW := 0;
@@ -375,7 +375,6 @@ END_VAR
 		
 		IF fbModbusMaster.Error THEN
 			iStepRunning := E_ModbusMasterStateRun.ReturnReadDone;
-			ipModbusSlave[iLoopSlave].ModbusErrorID := iErrorID;
 		END_IF
 	
 	E_ModbusMasterStateRun.ConvertRawData: // Convert raw data
@@ -479,15 +478,14 @@ END_VAR
 			E_ModbusFunction.WriteSingleRegister:
 				fbModbusMaster.WriteSingleRegister( Execute := FALSE);
 		END_CASE
-		
-			IF NOT fbModbusMaster.BUSY AND  NOT fbModbusMaster.Error THEN
-				iStepRunning := E_ModbusMasterStateRun.SetParametersWrite;
-				nNumberFaultRW := 0;
-			END_IF
-			IF fbModbusMaster.Error THEN
-				iStepRunning := E_ModbusMasterStateRun.ReturnWriteDone ;
-				ipModbusSlave[iLoopSlave].ModbusErrorID := iErrorID;
-			END_IF
+		ipModbusSlave[iLoopSlave].ModbusErrorID := iErrorID;
+		IF NOT fbModbusMaster.BUSY AND  NOT fbModbusMaster.Error THEN
+			iStepRunning := E_ModbusMasterStateRun.SetParametersWrite;
+			nNumberFaultRW := 0;
+		END_IF
+		IF fbModbusMaster.Error THEN
+			iStepRunning := E_ModbusMasterStateRun.ReturnWriteDone ;
+		END_IF
 	
 	 E_ModbusMasterStateRun.ReturnWriteDone :
 		iLoopAdr := 0;
@@ -644,7 +642,8 @@ END_VAR
       <LineId Id="633" Count="3" />
       <LineId Id="638" Count="55" />
       <LineId Id="797" Count="0" />
-      <LineId Id="694" Count="29" />
+      <LineId Id="694" Count="10" />
+      <LineId Id="706" Count="17" />
       <LineId Id="798" Count="1" />
       <LineId Id="724" Count="6" />
       <LineId Id="732" Count="0" />
@@ -677,7 +676,8 @@ END_VAR
       <LineId Id="910" Count="0" />
       <LineId Id="772" Count="0" />
       <LineId Id="911" Count="0" />
-      <LineId Id="773" Count="18" />
+      <LineId Id="773" Count="5" />
+      <LineId Id="780" Count="11" />
       <LineId Id="795" Count="1" />
       <LineId Id="2" Count="0" />
     </LineIds>

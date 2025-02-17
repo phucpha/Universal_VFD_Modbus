@@ -30,11 +30,11 @@ END_VAR]]></Declaration>
 	ABBAcs480.FirstCycle( sName := 'ABB acs480',
 							iUnitID := 5);			
 	emkoSs.FirstCycle( sName := 'ss 01',
-						iUnitID := 11);
+						iUnitID := 10);
 	arrIfVFD[0] := Mdriver;
 	arrIfVFD[1] := ABBAcs480;				
 	IF fbModbusMaster.Init() THEN
-		//fbModbusMaster.RegisterSlave( ModbusSlave := ABBAcs480);
+		fbModbusMaster.RegisterSlave( ModbusSlave := ABBAcs480);
 		fbModbusMaster.RegisterSlave( ModbusSlave := Mdriver);
 		fbModbusMaster.RegisterSlave( ModbusSlave := emkoSs);
 		fbModbusMaster.Timeout := 1000;
