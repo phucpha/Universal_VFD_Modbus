@@ -9,18 +9,15 @@ VAR
 	tonBetweenTestCase		: TON;
 	tBetweenTestCase		: TON;
 	indexTestCase			: UDINT; // +1 each test case
+	arrDataRead				: ARRAY [0..50] OF WORD; 
 END_VAR
 //for Intergrate Test// if want to test any FB extent FB_UniversalVFDModbus => replace the FB_UniversalVFDModbus_Ex. 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[CASE indexTestCase OF
-	0:
-		WhenFirstCycleExpectNameAndUinitIDTheSame();
-	1:
-		WhenUnInitializedMR_InitExpectStateInitializing();
-END_CASE
-
-
+      <ST><![CDATA[WhenFirstCycleExpectNameAndUinitIDTheSame();
+WhenUnInitializedExpect_Active_Busy_areFalse();
+WhenUnInitializedMR_InitExpectStateInitializing();
+WhenInitializingExpectActiveFalseAndBusyTrue();
 FbVFDModbus();]]></ST>
     </Implementation>
     <Method Name="WhenFirstCycleExpectNameAndUinitIDTheSame" Id="{7b54bf80-b6ed-4e04-9fba-dd097471a899}">
@@ -28,7 +25,7 @@ FbVFDModbus();]]></ST>
 VAR	
 		sNameResult	: STRING;
 		iUinitIDResult	: BYTE;
-	// @TEST-FIXTURE Also as @TEST-RESULT
+	// @TEST-FIXTURE Also as @TEST-EXPECT
 		sName_In : STRING := 'VFD';
 		iUinitID_In : BYTE := 43;
 END_VAR
@@ -44,33 +41,174 @@ sNameResult := FbVFDModbus.Name;
 iUinitIDResult := FbVFDModbus.UnitID;				
 // @TEST-ASSERT
 AssertEquals( Expected := sName_In,
-				Actual := FbVFDModbus.Name,
+				Actual := sNameResult,
 				Message := 'Test Set name Fail');
 				
 AssertEquals( Expected := iUinitID_In,
-				Actual := FbVFDModbus.UnitID,
+				Actual := iUinitIDResult,
 				Message := 'Test Set Id Address Fail');
 				
 // always Remember Implement Test_finished	
 TEST_FINISHED();
-indexTestCase := indexTestCase + 1;
+indexTestCase := 1;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WhenInitializingAndStatusReadyToRunExpectStateReadyInitialized" Id="{552fe48d-3d21-45ca-9631-5d9438a2b879}">
+      <Declaration><![CDATA[METHOD PROTECTED WhenInitializingAndStatusReadyToRunExpectStateReadyInitialized
+VAR
+	bActiveACT : BOOL;
+	bBusyACT	: BOOL;
+	eStateACT : E_VFD_State;
+	//@TEST-FIXTURE
+	eStateFixture	: E_VFD_State := VFD_INITIALIZING;
+	//@TEST-EXPECT
+	eStateExp	: E_VFD_State := VFD_READY_INITIALIZED;
+	bActiveExp : BOOL := FALSE;
+	bBusyExp	: BOOL := TRUE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST( 'When Initializing And Status Ready To Run Expect State ReadyInitialized');
+FbVFDModbus.MR_Init();
+IF FbVFDModbus.State = eStateFixture  THEN
+	// Modbus Return Status Ready to Run
+	arrDataRead[0] := 10;
+	FbVFDModbus.Convert( iRegionNo := 0,
+						pReadData := ADR( arrDataRead) );
+					
+ELSIF FbVFDModbus.State = eStateExp THEN
+	AssertEquals( Expected := eStateFixture,
+					Actual := eStateACT,
+					Message := 'FIXTURE CONDITION NOT PROPERLY');
+ELSE
+	eStateACT := FbVFDModbus.State;
+	AssertEquals( Expected := eStateFixture,
+					Actual := eStateACT,
+					Message := 'FIXTURE CONDITION NOT PROPERLY');
+	TEST_FINISHED();
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WhenInitializingExpectActiveFalseAndBusyTrue" Id="{d9e6d6f5-a1cd-42a0-b99f-72afc21013fc}">
+      <Declaration><![CDATA[METHOD PROTECTED WhenInitializingExpectActiveFalseAndBusyTrue
+VAR
+	bActiveACT : BOOL;
+	bBusyACT	: BOOL;
+	eStateACT : E_VFD_State;
+	//@TEST-FIXTURE
+	eStateFixture	: E_VFD_State := VFD_INITIALIZING;
+	//@TEST-EXPECT
+	bActiveExp : BOOL := FALSE;
+	bBusyExp	: BOOL := TRUE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST( 'When Initializing expect Active is False and Busy is True');
+IF FbVFDModbus.State = eStateFixture THEN
+	// @TEST-RUN
+	bBusyACT := FbVFDModbus.Busy;
+	bActiveACT := FbVFDModbus.Active;
+	// @TEST-ASSERT
+	AssertEquals( Expected := bActiveExp,
+					Actual := bActiveACT,
+					Message := 'Test MR_Init Fail at Busy');
+	AssertEquals( Expected := bBusyExp,
+					Actual := bBusyACT,
+					Message := ' Mr_Init Fail at Busy at Active');
+	TEST_FINISHED();
+ELSE
+	eStateACT := FbVFDModbus.State;
+	AssertEquals( Expected := eStateFixture,
+					Actual := eStateACT,
+					Message := 'FIXTURE CONDITION NOT PROPERLY');
+	TEST_FINISHED();
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WhenUnInitializedExpect_Active_Busy_areFalse" Id="{f7a91dc5-7ad7-49a0-871b-eb0fb048bd72}">
+      <Declaration><![CDATA[METHOD PROTECTED WhenUnInitializedExpect_Active_Busy_areFalse
+VAR
+	bActiveResult : BOOL;
+	bBusyResult	: BOOL;
+	eStateResult : E_VFD_State;
+	//@TEST-FIXTURE
+	eStateFixture	: E_VFD_State := VFD_UNINITIALIZED;
+	//@TEST-EXPECT
+	bActiveExp : BOOL := FALSE;
+	bBusyExp	: BOOL := FALSE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST( 'When UnInitialized expect Active and Busy are False');
+IF FbVFDModbus.State = eStateFixture THEN
+	// @TEST-RUN
+	bBusyResult := FbVFDModbus.Busy;
+	bActiveResult := FbVFDModbus.Active;
+	// @TEST-ASSERT
+	AssertEquals( Expected := bActiveExp,
+					Actual := bActiveResult,
+					Message := 'Test Uninitialized failed at Active');
+	AssertEquals( Expected := bBusyExp,
+					Actual := bBusyResult,
+					Message := 'Test Uninitialized failed at Busy');
+	TEST_FINISHED();
+ELSE
+	eStateResult := FbVFDModbus.State;
+	AssertEquals( Expected := eStateFixture,
+					Actual := eStateResult,
+					Message := 'FIXTURE CONDITION NOT PROPERLY');
+	TEST_FINISHED();
+END_IF
 ]]></ST>
       </Implementation>
     </Method>
     <Method Name="WhenUnInitializedMR_InitExpectStateInitializing" Id="{21b23d33-81b0-495b-8b50-8b96332ad6ae}">
       <Declaration><![CDATA[METHOD PROTECTED WhenUnInitializedMR_InitExpectStateInitializing
+VAR
+	eStateResult	: E_VFD_State;
+	bBusyResult			: BOOL;
+	//@TEST-FIXTURE
+	eStateFixture	: E_VFD_State := VFD_UNINITIALIZED;
+	//@TEST-EXPECT
+	eStateExpect	: E_VFD_State := VFD_INITIALIZING;
+	bBusyExpect	: BOOL := TRUE;
+END_VAR
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[TEST( 'When UnInitialized call MR_Init Expect State Initializing and Busy is True');
+IF FbVFDModbus.State = eStateFixture THEN
+	// @TEST-RUN
+	FbVFDModbus.MR_Init();
+	eStateResult := FbVFDModbus.State;
+	bBusyResult := FbVFDModbus.Busy;
+	
+	// @TEST-ASSERT
+	AssertEquals( Expected := eStateExpect,
+					Actual := eStateResult,
+					Message := 'Test MR_Init Fail at Request');
+	AssertEquals( Expected := bBusyExpect,
+					Actual := bBusyResult,
+					Message := 'Test Mr_Init Fail at Busy at Request');
+	TEST_FINISHED();
+ELSE
+	eStateResult := FbVFDModbus.State;
+	AssertEquals( Expected := eStateFixture,
+					Actual := eStateResult,
+					Message := 'FIXTURE CONDITION NOT PROPERLY');
+	TEST_FINISHED();
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_UniversalVFDModbus_Test">
-      <LineId Id="40" Count="1" />
-      <LineId Id="43" Count="2" />
-      <LineId Id="42" Count="0" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="39" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="50" Count="0" />
       <LineId Id="20" Count="0" />
     </LineIds>
     <LineIds Name="FB_UniversalVFDModbus_Test.WhenFirstCycleExpectNameAndUinitIDTheSame">
@@ -90,8 +228,41 @@ indexTestCase := indexTestCase + 1;
       <LineId Id="59" Count="1" />
       <LineId Id="53" Count="0" />
     </LineIds>
-    <LineIds Name="FB_UniversalVFDModbus_Test.WhenUnInitializedMR_InitExpectStateInitializing">
+    <LineIds Name="FB_UniversalVFDModbus_Test.WhenInitializingAndStatusReadyToRunExpectStateReadyInitialized">
+      <LineId Id="15" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="43" Count="1" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="28" Count="6" />
       <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_UniversalVFDModbus_Test.WhenInitializingExpectActiveFalseAndBusyTrue">
+      <LineId Id="16" Count="19" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_UniversalVFDModbus_Test.WhenUnInitializedExpect_Active_Busy_areFalse">
+      <LineId Id="28" Count="2" />
+      <LineId Id="33" Count="16" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_UniversalVFDModbus_Test.WhenUnInitializedMR_InitExpectStateInitializing">
+      <LineId Id="55" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="39" Count="11" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="52" Count="2" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="20" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
