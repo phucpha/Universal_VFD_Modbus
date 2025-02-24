@@ -127,6 +127,12 @@
     <Compile Include="TEST\FB_ModbusSlave_Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TEST\FB_UniversalVFDModbus_Ex.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TEST\FB_UniversalVFDModbus_Test.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TEST\PGR_Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -151,6 +157,9 @@
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="TcUnit">
+      <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>

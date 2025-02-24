@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_UniversalVFDModbus_Test" Id="{f6ce7f7e-041b-4ce4-a278-ab79294f50bb}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_UniversalVFDModbus_Test EXTENDS FB_TestSuite
+
+VAR
+	FbVFDModbus : FB_UniversalVFDModbus_Ex;
+	nCycle	: LINT;
+	tonBetweenTestCase		: TON;
+	tBetweenTestCase		: TON;
+	indexTestCase			: UDINT; // +1 each test case
+END_VAR
+//for Intergrate Test// if want to test any FB extent FB_UniversalVFDModbus => replace the FB_UniversalVFDModbus_Ex. 
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE indexTestCase OF
+	0:
+		WhenFirstCycleExpectNameAndUinitIDTheSame();
+	1:
+		WhenUnInitializedMR_InitExpectStateInitializing();
+END_CASE
+
+
+FbVFDModbus();]]></ST>
+    </Implementation>
+    <Method Name="WhenFirstCycleExpectNameAndUinitIDTheSame" Id="{7b54bf80-b6ed-4e04-9fba-dd097471a899}">
+      <Declaration><![CDATA[METHOD protected WhenFirstCycleExpectNameAndUinitIDTheSame
+VAR	
+		sNameResult	: STRING;
+		iUinitIDResult	: BYTE;
+	// @TEST-FIXTURE Also as @TEST-RESULT
+		sName_In : STRING := 'VFD';
+		iUinitID_In : BYTE := 43;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST( 'When Set Name expect ');
+
+// @TEST-RUN
+FbVFDModbus.FirstCycle( sName := sName_In,
+						iUnitID := iUinitID_In);
+	
+sNameResult := FbVFDModbus.Name;
+iUinitIDResult := FbVFDModbus.UnitID;				
+// @TEST-ASSERT
+AssertEquals( Expected := sName_In,
+				Actual := FbVFDModbus.Name,
+				Message := 'Test Set name Fail');
+				
+AssertEquals( Expected := iUinitID_In,
+				Actual := FbVFDModbus.UnitID,
+				Message := 'Test Set Id Address Fail');
+				
+// always Remember Implement Test_finished	
+TEST_FINISHED();
+indexTestCase := indexTestCase + 1;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WhenUnInitializedMR_InitExpectStateInitializing" Id="{21b23d33-81b0-495b-8b50-8b96332ad6ae}">
+      <Declaration><![CDATA[METHOD PROTECTED WhenUnInitializedMR_InitExpectStateInitializing
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_UniversalVFDModbus_Test">
+      <LineId Id="40" Count="1" />
+      <LineId Id="43" Count="2" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="20" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_UniversalVFDModbus_Test.WhenFirstCycleExpectNameAndUinitIDTheSame">
+      <LineId Id="16" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="28" Count="3" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="34" Count="1" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="59" Count="1" />
+      <LineId Id="53" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_UniversalVFDModbus_Test.WhenUnInitializedMR_InitExpectStateInitializing">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

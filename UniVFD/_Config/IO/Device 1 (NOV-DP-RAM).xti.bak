@@ -18,7 +18,7 @@
 		<Vars VarGrpType="2" InsertType="1">
 			<Name>Outputs</Name>
 		</Vars>
-		<Image Id="1" ImageFlags="#x00000042" AddrType="12" ImageType="5">
+		<Image Id="1" ImageFlags="#x00000042" AddrType="5" ImageType="5">
 			<Name>Image</Name>
 		</Image>
 		<DpRam/>

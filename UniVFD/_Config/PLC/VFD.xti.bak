@@ -1,75 +1,149 @@
 <?xml version="1.0"?>
 <TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.56" ClassName="CNestedPlcProjDef">
-	<DataTypes>
-		<DataType>
-			<Name GUID="{85E5F182-994B-D58F-D73E-E06C3608A833}" Namespace="Tc2_ModbusRTU" AutoDeleteType="true">MB_PcComInData</Name>
-			<BitSize>528</BitSize>
-			<SubItem>
-				<Name>SerStatus</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000004}">WORD</Type>
-				<BitSize>16</BitSize>
-				<BitOffs>0</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>D</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000001}">BYTE</Type>
-				<ArrayInfo>
-					<LBound>0</LBound>
-					<Elements>64</Elements>
-				</ArrayInfo>
-				<BitSize>512</BitSize>
-				<BitOffs>16</BitOffs>
-			</SubItem>
-			<Properties>
-				<Property>
-					<Name>hide</Name>
-				</Property>
-			</Properties>
-		</DataType>
-		<DataType>
-			<Name GUID="{817F87BD-54FA-7383-92CB-61C84BBDADE4}" Namespace="Tc2_ModbusRTU" AutoDeleteType="true">MB_PcComOutData</Name>
-			<BitSize>528</BitSize>
-			<SubItem>
-				<Name>SerCtrl</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000004}">WORD</Type>
-				<BitSize>16</BitSize>
-				<BitOffs>0</BitOffs>
-			</SubItem>
-			<SubItem>
-				<Name>D</Name>
-				<Type GUID="{18071995-0000-0000-0000-000000000001}">BYTE</Type>
-				<ArrayInfo>
-					<LBound>0</LBound>
-					<Elements>64</Elements>
-				</ArrayInfo>
-				<BitSize>512</BitSize>
-				<BitOffs>16</BitOffs>
-			</SubItem>
-			<Properties>
-				<Property>
-					<Name>hide</Name>
-				</Property>
-			</Properties>
-		</DataType>
-	</DataTypes>
 	<Project GUID="{A539E10C-E5F8-4694-A8D1-A1C3526A7D71}" Name="VFD" PrjFilePath="..\..\VFD\VFD.plcproj" TmcFilePath="..\..\VFD\VFD.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="VFD\VFD.tmc" TmcHash="{22868D93-BD75-1476-E23F-6C5D96838683}">
+		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="VFD\VFD.tmc" TmcHash="{3E6B9C6F-8EF0-A286-4241-9C3F94395344}">
 			<Name>VFD Instance</Name>
 			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
-			<Vars VarGrpType="1">
-				<Name>Machine Inputs</Name>
-				<Var>
-					<Name>Prg_Machine.fbModbusMaster.fbModbusMaster.InData</Name>
-					<Type GUID="{85E5F182-994B-D58F-D73E-E06C3608A833}" Namespace="Tc2_ModbusRTU">MB_PcComInData</Type>
-				</Var>
-			</Vars>
-			<Vars VarGrpType="2" AreaNo="1">
-				<Name>Machine Outputs</Name>
-				<Var>
-					<Name>Prg_Machine.fbModbusMaster.fbModbusMaster.OutData</Name>
-					<Type GUID="{817F87BD-54FA-7383-92CB-61C84BBDADE4}" Namespace="Tc2_ModbusRTU">MB_PcComOutData</Type>
-				</Var>
-			</Vars>
+			<UnrestoredVarLinks ImportTime="2025-02-24T10:29:13">
+				<OwnerA Name="InputDst" Prefix="TIPC^VFD^VFD Instance" Type="1">
+					<OwnerB Name="TIID^Device 4 (COM Port)">
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data1" Size="8" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data10" Size="8" OffsA="72" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data11" Size="8" OffsA="80" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data12" Size="8" OffsA="88" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data13" Size="8" OffsA="96" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data14" Size="8" OffsA="104" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data15" Size="8" OffsA="112" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data16" Size="8" OffsA="120" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data17" Size="8" OffsA="128" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data18" Size="8" OffsA="136" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data19" Size="8" OffsA="144" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data2" Size="8" OffsA="8" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data20" Size="8" OffsA="152" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data21" Size="8" OffsA="160" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data22" Size="8" OffsA="168" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data23" Size="8" OffsA="176" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data24" Size="8" OffsA="184" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data25" Size="8" OffsA="192" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data26" Size="8" OffsA="200" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data27" Size="8" OffsA="208" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data28" Size="8" OffsA="216" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data29" Size="8" OffsA="224" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data3" Size="8" OffsA="16" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data30" Size="8" OffsA="232" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data31" Size="8" OffsA="240" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data32" Size="8" OffsA="248" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data33" Size="8" OffsA="256" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data34" Size="8" OffsA="264" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data35" Size="8" OffsA="272" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data36" Size="8" OffsA="280" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data37" Size="8" OffsA="288" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data38" Size="8" OffsA="296" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data39" Size="8" OffsA="304" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data4" Size="8" OffsA="24" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data40" Size="8" OffsA="312" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data41" Size="8" OffsA="320" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data42" Size="8" OffsA="328" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data43" Size="8" OffsA="336" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data44" Size="8" OffsA="344" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data45" Size="8" OffsA="352" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data46" Size="8" OffsA="360" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data47" Size="8" OffsA="368" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data48" Size="8" OffsA="376" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data49" Size="8" OffsA="384" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data5" Size="8" OffsA="32" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data50" Size="8" OffsA="392" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data51" Size="8" OffsA="400" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data52" Size="8" OffsA="408" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data53" Size="8" OffsA="416" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data54" Size="8" OffsA="424" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data55" Size="8" OffsA="432" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data56" Size="8" OffsA="440" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data57" Size="8" OffsA="448" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data58" Size="8" OffsA="456" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data59" Size="8" OffsA="464" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data6" Size="8" OffsA="40" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data60" Size="8" OffsA="472" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data61" Size="8" OffsA="480" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data62" Size="8" OffsA="488" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data63" Size="8" OffsA="496" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data64" Size="8" OffsA="504" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data7" Size="8" OffsA="48" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data8" Size="8" OffsA="56" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Inputs^Data9" Size="8" OffsA="64" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.InData^SerStatus" TypeA="WORD" InOutA="0" ParentTypeA="MB_PcComInData" GuidA="{18071995-0000-0000-0000-000000000004}" VarB="Inputs^Status" RestoreInfo="ANotFound"/>
+					</OwnerB>
+				</OwnerA>
+				<OwnerA Name="OutputSrc" Prefix="TIPC^VFD^VFD Instance" Type="2">
+					<OwnerB Name="TIID^Device 4 (COM Port)">
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data1" Size="8" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data10" Size="8" OffsA="72" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data11" Size="8" OffsA="80" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data12" Size="8" OffsA="88" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data13" Size="8" OffsA="96" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data14" Size="8" OffsA="104" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data15" Size="8" OffsA="112" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data16" Size="8" OffsA="120" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data17" Size="8" OffsA="128" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data18" Size="8" OffsA="136" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data19" Size="8" OffsA="144" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data2" Size="8" OffsA="8" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data20" Size="8" OffsA="152" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data21" Size="8" OffsA="160" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data22" Size="8" OffsA="168" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data23" Size="8" OffsA="176" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data24" Size="8" OffsA="184" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data25" Size="8" OffsA="192" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data26" Size="8" OffsA="200" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data27" Size="8" OffsA="208" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data28" Size="8" OffsA="216" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data29" Size="8" OffsA="224" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data3" Size="8" OffsA="16" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data30" Size="8" OffsA="232" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data31" Size="8" OffsA="240" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data32" Size="8" OffsA="248" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data33" Size="8" OffsA="256" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data34" Size="8" OffsA="264" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data35" Size="8" OffsA="272" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data36" Size="8" OffsA="280" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data37" Size="8" OffsA="288" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data38" Size="8" OffsA="296" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data39" Size="8" OffsA="304" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data4" Size="8" OffsA="24" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data40" Size="8" OffsA="312" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data41" Size="8" OffsA="320" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data42" Size="8" OffsA="328" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data43" Size="8" OffsA="336" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data44" Size="8" OffsA="344" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data45" Size="8" OffsA="352" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data46" Size="8" OffsA="360" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data47" Size="8" OffsA="368" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data48" Size="8" OffsA="376" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data49" Size="8" OffsA="384" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data5" Size="8" OffsA="32" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data50" Size="8" OffsA="392" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data51" Size="8" OffsA="400" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data52" Size="8" OffsA="408" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data53" Size="8" OffsA="416" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data54" Size="8" OffsA="424" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data55" Size="8" OffsA="432" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data56" Size="8" OffsA="440" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data57" Size="8" OffsA="448" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data58" Size="8" OffsA="456" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data59" Size="8" OffsA="464" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data6" Size="8" OffsA="40" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data60" Size="8" OffsA="472" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data61" Size="8" OffsA="480" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data62" Size="8" OffsA="488" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data63" Size="8" OffsA="496" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data64" Size="8" OffsA="504" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data7" Size="8" OffsA="48" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data8" Size="8" OffsA="56" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" TypeA="ARRAY [0..63] OF BYTE" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000300000040}" VarB="Outputs^Data9" Size="8" OffsA="64" RestoreInfo="ANotFound"/>
+						<Link VarA="Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^SerCtrl" TypeA="WORD" InOutA="1" ParentTypeA="MB_PcComOutData" GuidA="{18071995-0000-0000-0000-000000000004}" VarB="Outputs^Ctrl" RestoreInfo="ANotFound"/>
+					</OwnerB>
+				</OwnerA>
+			</UnrestoredVarLinks>
 			<Contexts>
 				<Context>
 					<Id>0</Id>
@@ -86,140 +160,4 @@
 			</TaskPouOids>
 		</Instance>
 	</Project>
-	<Mappings>
-		<OwnerA Name="VFD Instance">
-			<OwnerB Name="TIID^Device 4 (COM Port)">
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data1" Size="8"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data10" Size="8" OffsA="72"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data11" Size="8" OffsA="80"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data12" Size="8" OffsA="88"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data13" Size="8" OffsA="96"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data14" Size="8" OffsA="104"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data15" Size="8" OffsA="112"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data16" Size="8" OffsA="120"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data17" Size="8" OffsA="128"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data18" Size="8" OffsA="136"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data19" Size="8" OffsA="144"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data2" Size="8" OffsA="8"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data20" Size="8" OffsA="152"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data21" Size="8" OffsA="160"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data22" Size="8" OffsA="168"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data23" Size="8" OffsA="176"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data24" Size="8" OffsA="184"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data25" Size="8" OffsA="192"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data26" Size="8" OffsA="200"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data27" Size="8" OffsA="208"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data28" Size="8" OffsA="216"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data29" Size="8" OffsA="224"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data3" Size="8" OffsA="16"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data30" Size="8" OffsA="232"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data31" Size="8" OffsA="240"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data32" Size="8" OffsA="248"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data33" Size="8" OffsA="256"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data34" Size="8" OffsA="264"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data35" Size="8" OffsA="272"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data36" Size="8" OffsA="280"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data37" Size="8" OffsA="288"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data38" Size="8" OffsA="296"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data39" Size="8" OffsA="304"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data4" Size="8" OffsA="24"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data40" Size="8" OffsA="312"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data41" Size="8" OffsA="320"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data42" Size="8" OffsA="328"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data43" Size="8" OffsA="336"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data44" Size="8" OffsA="344"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data45" Size="8" OffsA="352"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data46" Size="8" OffsA="360"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data47" Size="8" OffsA="368"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data48" Size="8" OffsA="376"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data49" Size="8" OffsA="384"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data5" Size="8" OffsA="32"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data50" Size="8" OffsA="392"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data51" Size="8" OffsA="400"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data52" Size="8" OffsA="408"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data53" Size="8" OffsA="416"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data54" Size="8" OffsA="424"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data55" Size="8" OffsA="432"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data56" Size="8" OffsA="440"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data57" Size="8" OffsA="448"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data58" Size="8" OffsA="456"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data59" Size="8" OffsA="464"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data6" Size="8" OffsA="40"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data60" Size="8" OffsA="472"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data61" Size="8" OffsA="480"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data62" Size="8" OffsA="488"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data63" Size="8" OffsA="496"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data64" Size="8" OffsA="504"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data7" Size="8" OffsA="48"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data8" Size="8" OffsA="56"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^D" VarB="Inputs^Data9" Size="8" OffsA="64"/>
-				<Link VarA="Machine Inputs^Prg_Machine.fbModbusMaster.fbModbusMaster.InData^SerStatus" VarB="Inputs^Status"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data1" Size="8"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data10" Size="8" OffsA="72"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data11" Size="8" OffsA="80"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data12" Size="8" OffsA="88"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data13" Size="8" OffsA="96"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data14" Size="8" OffsA="104"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data15" Size="8" OffsA="112"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data16" Size="8" OffsA="120"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data17" Size="8" OffsA="128"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data18" Size="8" OffsA="136"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data19" Size="8" OffsA="144"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data2" Size="8" OffsA="8"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data20" Size="8" OffsA="152"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data21" Size="8" OffsA="160"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data22" Size="8" OffsA="168"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data23" Size="8" OffsA="176"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data24" Size="8" OffsA="184"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data25" Size="8" OffsA="192"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data26" Size="8" OffsA="200"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data27" Size="8" OffsA="208"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data28" Size="8" OffsA="216"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data29" Size="8" OffsA="224"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data3" Size="8" OffsA="16"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data30" Size="8" OffsA="232"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data31" Size="8" OffsA="240"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data32" Size="8" OffsA="248"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data33" Size="8" OffsA="256"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data34" Size="8" OffsA="264"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data35" Size="8" OffsA="272"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data36" Size="8" OffsA="280"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data37" Size="8" OffsA="288"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data38" Size="8" OffsA="296"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data39" Size="8" OffsA="304"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data4" Size="8" OffsA="24"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data40" Size="8" OffsA="312"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data41" Size="8" OffsA="320"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data42" Size="8" OffsA="328"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data43" Size="8" OffsA="336"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data44" Size="8" OffsA="344"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data45" Size="8" OffsA="352"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data46" Size="8" OffsA="360"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data47" Size="8" OffsA="368"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data48" Size="8" OffsA="376"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data49" Size="8" OffsA="384"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data5" Size="8" OffsA="32"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data50" Size="8" OffsA="392"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data51" Size="8" OffsA="400"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data52" Size="8" OffsA="408"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data53" Size="8" OffsA="416"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data54" Size="8" OffsA="424"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data55" Size="8" OffsA="432"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data56" Size="8" OffsA="440"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data57" Size="8" OffsA="448"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data58" Size="8" OffsA="456"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data59" Size="8" OffsA="464"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data6" Size="8" OffsA="40"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data60" Size="8" OffsA="472"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data61" Size="8" OffsA="480"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data62" Size="8" OffsA="488"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data63" Size="8" OffsA="496"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data64" Size="8" OffsA="504"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data7" Size="8" OffsA="48"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data8" Size="8" OffsA="56"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^D" VarB="Outputs^Data9" Size="8" OffsA="64"/>
-				<Link VarA="Machine Outputs^Prg_Machine.fbModbusMaster.fbModbusMaster.OutData^SerCtrl" VarB="Outputs^Ctrl"/>
-			</OwnerB>
-		</OwnerA>
-	</Mappings>
 </TcSmItem>
