@@ -16,6 +16,10 @@
     <Implicit_KindOfTask>{7eb0dda8-e346-44d2-81d2-102dc987ce35}</Implicit_KindOfTask>
     <Implicit_Jitter_Distribution>{b5416a60-5301-40aa-91d4-f1422b111fd6}</Implicit_Jitter_Distribution>
     <LibraryReferences>{e717c3bb-c74d-4080-bd49-8fbb32d76fdc}</LibraryReferences>
+    <Company>HuynhPhuc</Company>
+    <Released>false</Released>
+    <Title>Modbus</Title>
+    <ProjectVersion>0.0.0.0</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUT\Common\U_Word2Int.TcDUT">
@@ -136,6 +140,9 @@
     <Compile Include="TEST\PGR_Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TEST\README.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="Tc2_ModbusRTU">
@@ -157,9 +164,6 @@
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="TcUnit">
-      <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>

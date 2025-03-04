@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="README" Id="{c8f4ad24-e575-4988-bb8e-97b3adb061d8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION README : bool
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*Chắc chắn rằng mỗi test case kiểm thử mức đơn vị sẽ độc lập với những test case khác.
+ Không nên gọi một test case khác trong một test case. Test case không nên phụ thuộc vào nhau cả về data và thứ tự thực hiện.
+Luôn luôn kiểm tra từng mô-đun một cách độc lập. 
+Nếu không, sẽ có nhiều sự chồng chéo giữa các ca thử nghiệm và việc thay đổi đối với một đơn vị có thể ảnh hưởng đến tất cả các mô-đun
+ khác và khiến phần mềm bị lỗi.
+Đặt tên các đơn vị kiểm thử một cách rõ ràng và nhất quán. 
+Đảm bảo rằng các test case dễ đọc, bất kỳ ai cũng có thể chọn test case và chạy nó mà không gặp bất kỳ vấn đề nào.
+Khi triển khai việc thay đổi giao diện hoặc chức năng, 
+cần chạy lại các test case trước đó nhằm đảm bảo việc thay đổi này không làm ảnh hưởng đến những test case cũ đã pass.
+Luôn đảm bảo lỗi được xác định trong quá trình Unit test được sửa trước khi chuyển sang giai đoạn tiếp theo.
+Không cố gắng viết test case để kiểm thử tất cả mọi thứ, thay vào đó nên tập chung vào kiểm thử sự ảnh hưởng của hành vi hệ thống
+Bên cạnh viết test case để test hành vi hệ thống, cần viết thêm test case để kiểm thử hiệu năng của mã nguồn
+Các testsuit nên đặt riêng ra, độc lập code với module
+Không nên có nhiều assert trong một test case vì khi một điều kiện không thỏa mãn thì các assert khác sẽ bị bỏ qua
+Sau một thời gian dài, số lượng test case nhiều, thời gian chạy lớn.
+ Nên chia ra nhóm test case cũ và test case mới, test case cũ sẽ chạy với tần xuất ít hơn*)
+ 
+(*Perspective:
+So let's take a step back and ask what TDD is trying to help us with.
+ TDD is trying to help us determine if our code is correct or not. And by correct,
+ I mean "does the code meet the business requirements?" The selling point is that we know changes will be required in the future, 
+and we want to make sure that our code remains correct after we make those changes.
+
+I bring that perspective up because I think it's easy to get lost in the details and lose sight of what we're trying to achieve.
+
+Principles - SAP:
+While I'm not an expert in TDD, I think you're missing part of what Single Assertion Principle (SAP) is trying to teach.
+ SAP can be restated as "test one thing at a time." But TOTAT doesn't roll off the tongue as easily as SAP does.
+
+Testing one thing at a time means that you focus on one case; one path; one boundary condition; 
+one error case; one whatever per test. 
+And the driving idea behind that is you need to know what broke when the test case fails, so you can resolve the issue more quickly. 
+If you test multiple conditions (ie. more than one thing) within a test and the test fails,
+ then you have a lot more work on your hands. 
+You first have to identify which of the multiple cases failed and then figure out why that case failed.
+If you test one thing at a time, your search scope is a lot smaller and the defect is identified more quickly.
+ Keep in mind that "test one thing at a time" doesn't necessarily exclude you from looking at more than one
+ process output at a time. For example, when testing a "known good path", I may expect to see a specific,
+ resulting value in foo as well as another value in bar and I may verify that foo != bar as part of my test. 
+The key is to logically group the output checks based upon the case being tested.
+Principles - PMP:
+Likewise, I think you're missing a bit about what Private Method Principle (PMP) has to teach us. 
+PMP encourages us to treat the system like a black box. For a given input, you should get a given output. 
+You don't care how the black box generates the output. You only care that your outputs align with your inputs.
+
+PMP is really good perspective for looking at the API aspects of your code. 
+It can also help you scope what you have to test. 
+Identify your interface points and verify that they meet the terms of their contracts. 
+You don't need to care about how the behind-the-interface (aka private) methods do their job. 
+You just need to verify they did what they were supposed to do.*) 
+ ]]></ST>
+    </Implementation>
+    <LineIds Name="README">
+      <LineId Id="13" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="17" Count="4" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="27" Count="1" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="39" Count="2" />
+      <LineId Id="33" Count="4" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="43" Count="1" />
+      <LineId Id="46" Count="7" />
+      <LineId Id="55" Count="1" />
+      <LineId Id="58" Count="1" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="60" Count="3" />
+      <LineId Id="30" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
