@@ -22,6 +22,9 @@
     <ProjectVersion>0.0.0.0</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Class Diagram.TcCD">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUT\Common\U_Word2Int.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -182,7 +185,6 @@
     <Folder Include="POUs\VFD" />
     <Folder Include="POUs\Universal Modbus RTU" />
     <Folder Include="Universal" />
-    <Folder Include="Universal\Utilities" />
   </ItemGroup>
   <ItemGroup>
     <None Include="VFD.tmc">

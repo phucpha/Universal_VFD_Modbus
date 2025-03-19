@@ -44,8 +44,7 @@ END_VAR
 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//fbModbusMaster();
-StateMachine();
+      <ST><![CDATA[StateMachine();
 bRun :=  iStepGeneral = E_ModBusMasterState.Running ;
 bStop := iStepGeneral = E_ModBusMasterState.stop_done;
 bInitialized := iStepGeneral >= E_ModBusMasterState.Ready;
@@ -303,25 +302,24 @@ END_VAR
       <Implementation>
         <ST><![CDATA[CASE iStepRunning OF
 	E_ModbusMasterStateRun.CheckNumberSlaveRegistered: // Trigger
-			IF iAmountSlave > 0 THEN
-				iStepRunning := E_ModbusMasterStateRun.SetParametersRead;
-			END_IF
+		IF iAmountSlave > 0 THEN
+			iStepRunning := E_ModbusMasterStateRun.SetParametersRead;
+		END_IF
 					
 	E_ModbusMasterStateRun.SetParametersRead: // Set parameters
-			
-		IF ipModbusSlave[iLoopSlave].NumAddRegionRead <> 0 AND 
-		   iLoopAdr <= ipModbusSlave[iLoopSlave].NumAddRegionRead - 1 THEN // iLoopAdr start from 1
-				iQuantity := (ipModbusSlave[iLoopSlave].AddressRead + (iLoopAdr*3+1)*SIZEOF(WORD));// arrAddressRead[iloopAdr][1] in Slave
-				iMBAddr := (ipModbusSlave[iLoopSlave].AddressRead + (iLoopAdr*3)*SIZEOF(WORD));// arrAddressRead[iloopAdr][0] in Slave
-				UnitID 	:=		ipModbusSlave[iLoopSlave].UnitID;
-				Quantity	:=	iQuantity^;
-				MBAddr	:=		iMBAddr^;
-				cbLength	:= 	SIZEOF(arrData);
-				pMemoryAddr	:= 	ADR(arrData);
-				peModbusFunction :=  (ipModbusSlave[iLoopSlave].AddressRead + (iLoopAdr*3 + 2)*SIZEOF(WORD)); // arrAddressRead[iloopAdr][2] in Slave
-				eModbusFunction := peModbusFunction^;
-				iLoopAdr := iLoopAdr + 1;
-				iStepRunning := E_ModbusMasterStateRun.SendRequestRead;
+		IF ipModbusSlave[iLoopSlave].NumAddRegionRead <> 0 
+		AND iLoopAdr <= (ipModbusSlave[iLoopSlave].NumAddRegionRead - 1) 
+		THEN
+			iQuantity := ipModbusSlave[iLoopSlave].AddressRead + ((iLoopAdr * 3 + 1) * SIZEOF(WORD));// arrAddressRead[iloopAdr][1] in Slave
+			iMBAddr := ipModbusSlave[iLoopSlave].AddressRead + ((iLoopAdr * 3) * SIZEOF(WORD));// arrAddressRead[iloopAdr][0] in Slave
+			UnitID := ipModbusSlave[iLoopSlave].UnitID;
+			Quantity :=	iQuantity^;
+			MBAddr := iMBAddr^;
+			cbLength := SIZEOF(arrData);
+			pMemoryAddr	:= ADR(arrData);
+			peModbusFunction := ipModbusSlave[iLoopSlave].AddressRead + ((iLoopAdr * 3 + 2) * SIZEOF(WORD)); // arrAddressRead[iloopAdr][2] in Slave
+			eModbusFunction := peModbusFunction^;
+			iStepRunning := E_ModbusMasterStateRun.SendRequestRead;
 		ELSE 
 			iLoopAdr := 0;
 			iStepRunning := E_ModbusMasterStateRun.ReturnReadDone;
@@ -331,56 +329,55 @@ END_VAR
 	E_ModbusMasterStateRun.SendRequestRead: // Send request
 		CASE eModbusFunction OF
 			E_ModbusFunction.ReadHoldingRegisters:
-				fbModbusMaster.ReadRegs( 	UnitID:= UnitID, 
-											Quantity:= Quantity, 
-											MBAddr:= MBAddr, 
-											cbLength:= cbLength, 
-											pMemoryAddr:= pMemoryAddr, 
-											Execute:=  TRUE,
-											Timeout:= 	UINT_TO_TIME(iTimeout),
-											BUSY=> bBusy, 
-											Error=> bError , 
-											ErrorId=>iErrorId 
-											);
+				fbModbusMaster.ReadRegs(
+					UnitID:= UnitID, 
+					Quantity:= Quantity, 
+					MBAddr:= MBAddr, 
+					cbLength:= cbLength, 
+					pMemoryAddr:= pMemoryAddr, 
+					Execute:= TRUE,
+					Timeout:= UINT_TO_TIME(iTimeout),
+					BUSY=> bBusy, 
+					Error=> bError , 
+					ErrorId=>iErrorId 
+				);
 			
 			E_ModbusFunction.ReadInputRegisters:
-				fbModbusMaster.ReadInputRegs( 	UnitID:= UnitID, 
-												Quantity:= Quantity, 
-												MBAddr:= MBAddr, 
-												cbLength:= cbLength, 
-												pMemoryAddr:= pMemoryAddr, 
-												Execute:=  TRUE,
-												Timeout:= 	UINT_TO_TIME(iTimeout),
-												BUSY=> bBusy, 
-												Error=> bError , 
-												ErrorId=>iErrorId 
-												);
+				fbModbusMaster.ReadInputRegs(
+					UnitID:= UnitID, 
+					Quantity:= Quantity, 
+					MBAddr:= MBAddr, 
+					cbLength:= cbLength, 
+					pMemoryAddr:= pMemoryAddr, 
+					Execute:= TRUE,
+					Timeout:= UINT_TO_TIME(iTimeout),
+					BUSY=> bBusy, 
+					Error=> bError , 
+					ErrorId=>iErrorId 
+				);
 			
 		END_CASE
 		iStepRunning := E_ModbusMasterStateRun.WaitReadRespond;
 						
 	E_ModbusMasterStateRun.WaitReadRespond:
-		CASE eModbusFunction OF
-			E_ModbusFunction.ReadHoldingRegisters:
-				fbModbusMaster.ReadRegs(Execute := FALSE);
-				
-			E_ModbusFunction.ReadInputRegisters:
-				fbModbusMaster.ReadInputRegs(Execute := FALSE);
-		END_CASE
+		fbModbusMaster.ReadRegs(Execute := FALSE);
+		fbModbusMaster.ReadInputRegs(Execute := FALSE);
 		ipModbusSlave[iLoopSlave].ModbusErrorID := iErrorID;
 		IF NOT fbModbusMaster.BUSY AND NOT fbModbusMaster.Error THEN
 			iStepRunning := E_ModbusMasterStateRun.ConvertRawData;
 			nNumberFaultRW := 0;
 		END_IF
 		
-		IF fbModbusMaster.Error THEN
+		IF fbModbusMaster.Error AND NOT fbModbusMaster.BUSY THEN
 			iStepRunning := E_ModbusMasterStateRun.ReturnReadDone;
 		END_IF
 	
-	E_ModbusMasterStateRun.ConvertRawData: // Convert raw data
-		IF iLoopSlave <= iAmountSlave THEN
-			ipModbusSlave[iLoopSlave].Convert(iLoopAdr - 1, ADR(arrData));// in case of setParametter iLoopadr := iLoopAdr +1,
-		END_IF
+	E_ModbusMasterStateRun.ConvertRawData: 
+		ipModbusSlave[iLoopSlave].Convert(
+			iRegionNo := iLoopAdr,
+		 	pReadData := ADR(arrData)
+		);
+		iLoopAdr := iLoopAdr + 1;
 		iStepRunning := E_ModbusMasterStateRun.CheckNumberSlaveRegistered;
 
 	E_ModbusMasterStateRun.ReturnReadDone: // Return, done
@@ -388,102 +385,96 @@ END_VAR
 		iLoopAdr := 0;
 
 	E_ModbusMasterStateRun.SetParametersWrite :
-		IF  ipModbusSlave[iLoopSlave].NumAddRegionWrite <> 0 
-		AND iLoopAdr <= ipModbusSlave[iLoopSlave].NumAddRegionWrite - 1 THEN // iLoopAdr start from 1
-			iMBAddr := ipModbusSlave[iLoopSlave].AddressWrite + (iLoopAdr*11)*SIZEOF(WORD);// return address word contain value address( modbus) 
-			pDataWrite := ipModbusSlave[iLoopSlave].AddressWrite + (iLoopAdr*11+2)*SIZEOF(WORD);
-			iQuantity := ipModbusSlave[iLoopSlave].AddressWrite + (iLoopAdr*11+1)*SIZEOF(WORD);
-			peModbusFunction := ipModbusSlave[iLoopSlave].AddressWrite + (iLoopAdr*11+10)*SIZEOF(WORD);
+		IF  ipModbusSlave[iLoopSlave].NumAddRegionWrite <> 0
+		AND iLoopAdr <= ipModbusSlave[iLoopSlave].NumAddRegionWrite - 1 
+		THEN // iLoopAdr start from 1
+			iMBAddr := ipModbusSlave[iLoopSlave].AddressWrite + (iLoopAdr * 11 * SIZEOF(WORD));// return address word contain value address( modbus) 
+			pDataWrite := ipModbusSlave[iLoopSlave].AddressWrite + ((iLoopAdr * 11 + 2) * SIZEOF(WORD));
+			iQuantity := ipModbusSlave[iLoopSlave].AddressWrite + ((iLoopAdr * 11 + 1) * SIZEOF(WORD));
+			peModbusFunction := ipModbusSlave[iLoopSlave].AddressWrite + ((iLoopAdr * 11 + 10) * SIZEOF(WORD));
 			eModbusFunction := peModbusFunction^;
 			UnitID 	:=		ipModbusSlave[iLoopSlave].UnitID;
 			Quantity	:=	iQuantity^;
 			MBAddr	:=		iMBAddr^;
-			cbLength	:= 	Quantity *2;
+			cbLength	:= 	Quantity * 2;
 			pMemoryAddr	:= 	pDataWrite;
-	
-			iLoopAdr := iLoopAdr + 1;
 			iStepRunning := E_ModbusMasterStateRun.SendRequestWrite;
 		ELSE 
-			iLoopAdr := 0;
 			iStepRunning := E_ModbusMasterStateRun.ReturnWriteDone;
 		END_IF
 
 	E_ModbusMasterStateRun.SendRequestWrite :
 		CASE eModbusFunction OF
 			E_ModbusFunction.WriteMultipleCoils:
-				fbModbusMaster.WriteMultipleCoils( 	UnitID:= UnitID, 
-													Quantity:= Quantity, 
-													MBAddr:= MBAddr, 
-													cbLength:= cbLength, 
-													pMemoryAddr:= pMemoryAddr, 
-													Execute:=  true,
-													Timeout:= 	UINT_TO_TIME(iTimeout),	
-													BUSY=> bBusy, 
-													Error=> bError , 
-													ErrorId=>iErrorId 
-												);
+				fbModbusMaster.WriteMultipleCoils(
+					UnitID:= UnitID, 
+					Quantity:= Quantity, 
+					MBAddr:= MBAddr, 
+					cbLength:= cbLength, 
+					pMemoryAddr:= pMemoryAddr, 
+					Execute:=  true,
+					Timeout:= 	UINT_TO_TIME(iTimeout),	
+					BUSY=> bBusy, 
+					Error=> bError , 
+					ErrorId=>iErrorId 
+				);
 													
 			E_ModbusFunction.WriteMultipleRegisters:
-				fbModbusMaster.WriteRegs( 	UnitID:= UnitID, 
-											Quantity:= Quantity, 
-											MBAddr:= MBAddr, 
-											cbLength:= cbLength, 
-											pMemoryAddr:= pMemoryAddr, 
-											Execute:=  true,
-											Timeout:= 	UINT_TO_TIME(iTimeout),	
-											BUSY=> bBusy, 
-											Error=> bError , 
-											ErrorId=>iErrorId 
-										);
+				fbModbusMaster.WriteRegs(
+					UnitID:= UnitID, 
+					Quantity:= Quantity, 
+					MBAddr:= MBAddr, 
+					cbLength:= cbLength, 
+					pMemoryAddr:= pMemoryAddr, 
+					Execute:= TRUE,
+					Timeout:= UINT_TO_TIME(iTimeout),	
+					BUSY=> bBusy, 
+					Error=> bError , 
+					ErrorId=>iErrorId 
+				);
 											
 			E_ModbusFunction.WriteSingleCoil:
-				fbModbusMaster.WriteSingleCoil( 	UnitID:= UnitID, 
-													Quantity:= Quantity, 
-													MBAddr:= MBAddr, 
-													cbLength:= cbLength, 
-													pMemoryAddr:= pMemoryAddr, 
-													Execute:=  true,
-													Timeout:= 	UINT_TO_TIME(iTimeout),	
-													BUSY=> bBusy, 
-													Error=> bError , 
-													ErrorId=>iErrorId 
-													);
+				fbModbusMaster.WriteSingleCoil(
+					UnitID:= UnitID, 
+					Quantity:= Quantity, 
+					MBAddr:= MBAddr, 
+					cbLength:= cbLength, 
+					pMemoryAddr:= pMemoryAddr, 
+					Execute:=  true,
+					Timeout:= UINT_TO_TIME(iTimeout),	
+					BUSY=> bBusy, 
+					Error=> bError , 
+					ErrorId=>iErrorId 
+				);
 			E_ModbusFunction.WriteSingleRegister:
-				fbModbusMaster.WriteSingleRegister( 	UnitID:= UnitID, 
-												Quantity:= Quantity, 
-												MBAddr:= MBAddr, 
-												cbLength:= cbLength, 
-												pMemoryAddr:= pMemoryAddr, 
-												Execute:=  true,
-												Timeout:= 	UINT_TO_TIME(iTimeout),	
-												BUSY=> bBusy, 
-												Error=> bError , 
-												ErrorId=>iErrorId 
-												);
+				fbModbusMaster.WriteSingleRegister(
+					UnitID:= UnitID, 
+					Quantity:= Quantity, 
+					MBAddr:= MBAddr, 
+					cbLength:= cbLength, 
+					pMemoryAddr:= pMemoryAddr, 
+					Execute:=  true,
+					Timeout:= 	UINT_TO_TIME(iTimeout),	
+					BUSY=> bBusy, 
+					Error=> bError , 
+					ErrorId=>iErrorId 
+				);
 		END_CASE
 		
 		iStepRunning := E_ModbusMasterStateRun.WaitWriteRespond;
 	
 	E_ModbusMasterStateRun.WaitWriteRespond :
-		CASE eModbusFunction OF
-			E_ModbusFunction.WriteMultipleCoils:
-				fbModbusMaster.WriteMultipleCoils( Execute := FALSE);
-													
-			E_ModbusFunction.WriteMultipleRegisters:
-				fbModbusMaster.WriteRegs( Execute := FALSE);
-											
-			E_ModbusFunction.WriteSingleCoil:
-				fbModbusMaster.WriteSingleCoil( Execute := FALSE);	
-										
-			E_ModbusFunction.WriteSingleRegister:
-				fbModbusMaster.WriteSingleRegister( Execute := FALSE);
-		END_CASE
+		fbModbusMaster.WriteMultipleCoils( Execute := FALSE);
+		fbModbusMaster.WriteRegs( Execute := FALSE);
+		fbModbusMaster.WriteSingleCoil( Execute := FALSE);	
+		fbModbusMaster.WriteSingleRegister( Execute := FALSE);
 		ipModbusSlave[iLoopSlave].ModbusErrorID := iErrorID;
-		IF NOT fbModbusMaster.BUSY AND  NOT fbModbusMaster.Error THEN
+		IF NOT fbModbusMaster.BUSY AND NOT fbModbusMaster.Error THEN
 			iStepRunning := E_ModbusMasterStateRun.SetParametersWrite;
 			nNumberFaultRW := 0;
+			iLoopAdr := iLoopAdr + 1;
 		END_IF
-		IF fbModbusMaster.Error THEN
+		IF fbModbusMaster.Error AND NOT fbModbusMaster.BUSY THEN
 			iStepRunning := E_ModbusMasterStateRun.ReturnWriteDone ;
 		END_IF
 	
@@ -564,7 +555,6 @@ END_VAR
       </Set>
     </Property>
     <LineIds Name="FB_ModbusMaster">
-      <LineId Id="226" Count="0" />
       <LineId Id="7" Count="0" />
       <LineId Id="9" Count="1" />
       <LineId Id="12" Count="0" />
@@ -640,43 +630,61 @@ END_VAR
     <LineIds Name="FB_ModbusMaster.StateRunning">
       <LineId Id="630" Count="1" />
       <LineId Id="633" Count="3" />
-      <LineId Id="638" Count="55" />
-      <LineId Id="797" Count="0" />
-      <LineId Id="694" Count="10" />
-      <LineId Id="706" Count="17" />
+      <LineId Id="638" Count="0" />
+      <LineId Id="640" Count="0" />
+      <LineId Id="921" Count="1" />
+      <LineId Id="642" Count="8" />
+      <LineId Id="652" Count="10" />
+      <LineId Id="937" Count="0" />
+      <LineId Id="663" Count="12" />
+      <LineId Id="938" Count="0" />
+      <LineId Id="676" Count="14" />
+      <LineId Id="931" Count="1" />
+      <LineId Id="697" Count="7" />
+      <LineId Id="706" Count="2" />
+      <LineId Id="710" Count="0" />
+      <LineId Id="939" Count="0" />
+      <LineId Id="919" Count="1" />
+      <LineId Id="923" Count="0" />
+      <LineId Id="712" Count="8" />
+      <LineId Id="918" Count="0" />
+      <LineId Id="721" Count="2" />
       <LineId Id="798" Count="1" />
-      <LineId Id="724" Count="6" />
+      <LineId Id="724" Count="4" />
       <LineId Id="732" Count="0" />
-      <LineId Id="736" Count="3" />
+      <LineId Id="736" Count="0" />
+      <LineId Id="738" Count="1" />
       <LineId Id="741" Count="1" />
       <LineId Id="800" Count="1" />
-      <LineId Id="829" Count="9" />
+      <LineId Id="829" Count="0" />
+      <LineId Id="940" Count="0" />
+      <LineId Id="830" Count="8" />
       <LineId Id="828" Count="0" />
       <LineId Id="859" Count="0" />
       <LineId Id="803" Count="0" />
       <LineId Id="818" Count="0" />
+      <LineId Id="941" Count="0" />
       <LineId Id="850" Count="8" />
       <LineId Id="817" Count="0" />
       <LineId Id="860" Count="0" />
       <LineId Id="804" Count="0" />
-      <LineId Id="840" Count="9" />
+      <LineId Id="840" Count="0" />
+      <LineId Id="942" Count="0" />
+      <LineId Id="841" Count="8" />
       <LineId Id="839" Count="0" />
       <LineId Id="805" Count="0" />
-      <LineId Id="807" Count="9" />
+      <LineId Id="807" Count="0" />
+      <LineId Id="943" Count="0" />
+      <LineId Id="808" Count="8" />
       <LineId Id="806" Count="0" />
       <LineId Id="802" Count="0" />
       <LineId Id="753" Count="1" />
       <LineId Id="769" Count="1" />
-      <LineId Id="861" Count="1" />
-      <LineId Id="872" Count="0" />
-      <LineId Id="874" Count="1" />
-      <LineId Id="885" Count="0" />
-      <LineId Id="887" Count="1" />
-      <LineId Id="898" Count="2" />
-      <LineId Id="910" Count="0" />
-      <LineId Id="772" Count="0" />
+      <LineId Id="933" Count="3" />
       <LineId Id="911" Count="0" />
-      <LineId Id="773" Count="5" />
+      <LineId Id="773" Count="2" />
+      <LineId Id="924" Count="0" />
+      <LineId Id="776" Count="2" />
       <LineId Id="780" Count="11" />
       <LineId Id="795" Count="1" />
       <LineId Id="2" Count="0" />
